@@ -2,14 +2,19 @@
 <html lang="bn">
 <head>
   <meta charset="UTF-8">
-  <title>আমাদের ওয়েবসাইট</title>
+<!-- ✅ SEO -->
+  <meta name="title" content="Digifix BD - Tech Solution in Bangladesh">
+  <meta name="description" content="Digifix BD is your trusted tech repair and service provider in Bangladesh. Fast, reliable, and expert solutions.">
+  <meta name="keywords" content="Digifix BD, tech repair Bangladesh, phone service, computer repair, IT support, digifix world, digifix tech, Tanjim Tech, Tanjim">
+  <meta name="author" content="Tanjim Tech">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <title>Digifix BD</title>
   <style>
-    /* Reset & Base Styling */
     body {
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #f2f5f8, #dfe9f3);
+      background-color: #0C1B36;
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -29,24 +34,43 @@
     }
 
     .container {
-      background: white;
+      background: #ffffff;
       padding: 50px;
       border-radius: 20px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
       text-align: center;
       animation: fadeInUp 1s ease forwards;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .logo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 20px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     h1 {
       font-size: 28px;
-      color: #333;
-      margin-bottom: 25px;
+      color: #0C1B36;
+      margin-bottom: 15px;
     }
 
     button {
-      padding: 14px 30px;
+      padding: 12px 28px;
+      margin: 8px;
       font-size: 16px;
-      background-color: #007bff;
+      background-color: #2CA58D;
       color: white;
       border: none;
       border-radius: 30px;
@@ -55,8 +79,8 @@
     }
 
     button:hover {
-      background-color: #0056b3;
-      transform: scale(1.1);
+      background-color: #1f7c6c;
+      transform: scale(1.05);
     }
 
     body::before {
@@ -64,7 +88,7 @@
       position: absolute;
       width: 100%;
       height: 100%;
-      background: #f0f0f0;
+      background: #0C1B36;
       opacity: 0;
       animation: fadeIn 2s ease forwards;
     }
@@ -78,7 +102,12 @@
 </head>
 <body>
   <div class="container">
+    <div class="logo">
+      <img src="img.png" alt="Logo">
+    </div>
+    <h1>Digifix BD</h1>
     <h1>আমাদের ওয়েবসাইট খুব শীঘ্রই লঞ্চ করা হবে!</h1>
+    <button onclick="window.location.href='https://www.facebook.com/digifixworld'">FACEBOOK PAGE</button><br>
     <button onclick="window.location.href='https://www.tanjim.tech/contact.html'">Contact Us</button>
   </div>
 </body>
