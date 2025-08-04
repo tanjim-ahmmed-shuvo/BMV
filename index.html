@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <!-- SEO Meta Tags -->
-    <title>Digifix BD - Meta Verified, Subscriptions & Digital Services in Bangladesh</title>
-    <meta name="description" content="Digifix BD offers reliable digital services in Bangladesh, including Facebook Meta Verification, Netflix, YouTube Premium, and various Android solutions at a low price. Contact Tanjim Ahmmed Shuvo directly or our agency, Digifix BD.">
+    
+    <!-- SEO Meta Tags will be updated by JavaScript -->
+    <title data-translate-key="pageTitle">Digifix BD - Meta Verified, Subscriptions & Digital Services in Bangladesh</title>
+    <meta name="description" content="" data-translate-key="metaDescription">
     <meta name="keywords" content="Meta Verified Bangladesh, Facebook blue badge, Netflix low price, YouTube Premium, Digital Services, Android repair, Digifix BD, Tanjim Ahmmed Shuvo">
+
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,27 +62,30 @@
             transition: background-color 0.3s ease;
             margin: 0.25rem;
         }
-        .whatsapp-btn {
-            background-color: #25D366;
-            color: white;
+        .whatsapp-btn { background-color: #25D366; color: white; }
+        .whatsapp-btn:hover { background-color: #1EBE57; }
+        .messenger-btn { background-color: #0084FF; color: white; }
+        .messenger-btn:hover { background-color: #0073E0; }
+        .facebook-btn { background-color: #1877F2; color: white; }
+        .facebook-btn:hover { background-color: #166FE5; }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.5); display: flex; align-items: center;
+            justify-content: center; z-index: 1000; opacity: 0;
+            visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
         }
-        .whatsapp-btn:hover {
-            background-color: #1EBE57;
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal-content {
+            background: white; padding: 2rem; border-radius: 12px;
+            width: 90%; max-width: 500px; transform: scale(0.9); transition: transform 0.3s;
         }
-        .messenger-btn {
-            background-color: #0084FF;
-            color: white;
+        .modal-overlay.active .modal-content { transform: scale(1); }
+        .loader {
+            border: 4px solid #f3f3f3; border-top: 4px solid #3498db;
+            border-radius: 50%; width: 40px; height: 40px;
+            animation: spin 1s linear infinite; margin: 1rem auto;
         }
-        .messenger-btn:hover {
-            background-color: #0073E0;
-        }
-        .facebook-btn {
-            background-color: #1877F2;
-            color: white;
-        }
-        .facebook-btn:hover {
-            background-color: #166FE5;
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -89,20 +94,25 @@
     <header class="bg-white shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
             <a href="#" class="flex items-center space-x-3">
-                <!-- Demo Logo: Replace with your logo URL -->
-                <img src="img.png" alt="Digifix BD Logo" class="rounded-full" style="height: 50px;">
+                <img src="img.png" alt="Digifix BD Logo" class="rounded-full">
                 <div class="flex items-center space-x-2">
                     <h1 class="text-xl md:text-2xl font-bold text-gray-800">Digifix BD | Tanjim Ahmmed Shuvo</h1>
-                    <!-- Blue Tick Image -->
                     <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Twitter_Verified_Badge.svg" alt="Verified Badge" class="w-5 h-5 ml-1">
                 </div>
             </a>
             <div class="hidden md:flex items-center space-x-4">
-                <a href="#services" class="text-gray-600 hover:text-blue-600">Services</a>
-                <a href="#contact" class="text-gray-600 hover:text-blue-600">Contact</a>
+                <a href="#services" class="text-gray-600 hover:text-blue-600" data-translate-key="navServices">Services</a>
+                <a href="#contact" class="text-gray-600 hover:text-blue-600" data-translate-key="navContact">Contact</a>
                 <a href="https://www.facebook.com/digifix.agency" target="_blank" class="cta-button facebook-btn text-sm">
-                    <i class="fab fa-facebook-f mr-2"></i> Visit Page
+                    <i class="fab fa-facebook-f mr-2"></i> <span data-translate-key="navVisitPage">Visit Page</span>
                 </a>
+                <!-- Language Switcher -->
+                <div class="relative">
+                    <select id="language-switcher" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="en">English</option>
+                        <option value="bn">বাংলা</option>
+                    </select>
+                </div>
             </div>
         </nav>
     </header>
@@ -111,112 +121,399 @@
     <section class="hero-gradient text-white py-12 md:py-20">
         <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
             <div class="text-center md:text-left">
-                <h2 class="text-4xl md:text-6xl font-black uppercase tracking-wide">Get Meta Verified</h2>
-                <p class="text-xl md:text-2xl font-light mt-4 mb-8">Low Price, Fast Delivery. Build Your Trust & Boost Your Brand!</p>
+                <h2 class="text-4xl md:text-6xl font-black uppercase tracking-wide" data-translate-key="heroTitle">Get Meta Verified</h2>
+                <p class="text-xl md:text-2xl font-light mt-4 mb-8" data-translate-key="heroSubtitle">Low Price, Fast Delivery. Build Your Trust & Boost Your Brand!</p>
                 <div class="flex flex-wrap justify-center md:justify-start">
                     <a href="https://wa.me/16506687797" target="_blank" class="cta-button whatsapp-btn">
-                        <i class="fab fa-whatsapp mr-2"></i> Contact on WhatsApp
+                        <i class="fab fa-whatsapp mr-2"></i> <span data-translate-key="heroBtnWhatsapp">Contact on WhatsApp</span>
                     </a>
                     <a href="https://m.me/tanjim.ahmmed.shuvo" target="_blank" class="cta-button messenger-btn">
-                        <i class="fab fa-facebook-messenger mr-2"></i> Send a Message
+                        <i class="fab fa-facebook-messenger mr-2"></i> <span data-translate-key="heroBtnMessenger">Send a Message</span>
                     </a>
                 </div>
             </div>
             <div>
-                <!-- Banner Image with responsive classes -->
-                <img src="banner.jpg" alt="Meta Verified Service" class="w-full h-auto max-w-md mx-auto rounded-lg shadow-2xl">
+                <img src="banner.jpg" alt="Meta Verified Service in Bangladesh" class="w-full h-auto max-w-md mx-auto rounded-lg shadow-2xl" onerror="this.onerror=null;this.src='https://placehold.co/600x400/0052D4/FFFFFF?text=Meta+Verified';">
             </div>
         </div>
     </section>
 
+    <!-- AI Helper Section -->
+    <section class="py-12 bg-blue-50">
+        <div class="container mx-auto px-6 text-center">
+            <h3 class="text-3xl font-bold text-gray-800 mb-4" data-translate-key="aiHelperTitle">Not Sure Which Service You Need?</h3>
+            <p class="text-gray-600 mb-6 max-w-2xl mx-auto" data-translate-key="aiHelperSubtitle">Tell our AI Helper what you need, and it will help you find the right service.</p>
+            <button id="ai-helper-btn" class="cta-button bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
+                ✨ <span data-translate-key="aiHelperBtn">Launch AI Service Helper</span>
+            </button>
+        </div>
+    </section>
+
     <main id="services" class="container mx-auto px-6 py-16">
-
-        <!-- Online Services Section -->
+        <!-- Service sections -->
         <section class="mb-16">
-            <h3 class="section-title">Online Services</h3>
-            <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
-                <div class="service-card"><i class="icon fas fa-check-circle"></i><h4 class="text-xl font-bold mb-2 text-blue-700">Facebook Meta Verified</h4><p class="text-gray-600">Blue badge at a low price.</p></div>
-                <div class="service-card"><i class="icon fas fa-user-shield"></i><h4 class="text-xl font-bold mb-2 text-blue-700">ID Unlock & Safety</h4><p class="text-gray-600">Facebook Lock ID Unlock & Running Verify.</p></div>
-                <div class="service-card"><i class="icon fab fa-instagram"></i><h4 class="text-xl font-bold mb-2 text-blue-700">Instagram & Threads</h4><p class="text-gray-600">Meta verification for Instagram & Threads.</p></div>
-                <div class="service-card"><i class="icon fas fa-bullhorn"></i><h4 class="text-xl font-bold mb-2 text-blue-700">Business & Ads</h4><p class="text-gray-600">Ads BIN, Business Manager & Page Verify.</p></div>
-                <div class="service-card"><i class="icon fab fa-whatsapp"></i><h4 class="text-xl font-bold mb-2 text-blue-700">WhatsApp Verify</h4><p class="text-gray-600">Get your WhatsApp Business verified.</p></div>
-                <div class="service-card"><i class="icon fas fa-exchange-alt"></i><h4 class="text-xl font-bold mb-2 text-blue-700">Payout Issue Fix</h4><p class="text-gray-600">Transfer, Restriction, Disabled Fix.</p></div>
+            <h3 class="section-title" data-translate-key="onlineServicesTitle">Online Services</h3>
+            <div class="grid md:grid-cols-3 lg:grid-cols-3 gap-8">
+                <div class="service-card"><i class="icon fas fa-check-circle"></i><h4 class="text-xl font-bold mb-2 text-blue-700" data-translate-key="fbMetaVerified">Facebook Meta Verified</h4><p class="text-gray-600" data-translate-key="fbMetaVerifiedDesc">Blue badge at a low price.</p></div>
+                <div class="service-card"><i class="icon fas fa-user-shield"></i><h4 class="text-xl font-bold mb-2 text-blue-700" data-translate-key="idUnlock">ID Unlock & Safety</h4><p class="text-gray-600" data-translate-key="idUnlockDesc">Facebook Lock ID Unlock & Running Verify.</p></div>
+                <div class="service-card"><i class="icon fab fa-instagram"></i><h4 class="text-xl font-bold mb-2 text-blue-700" data-translate-key="instaThreadsVerify">Instagram & Threads Verify</h4></div>
+                <div class="service-card"><i class="icon fas fa-bullhorn"></i><h4 class="text-xl font-bold mb-2 text-blue-700" data-translate-key="businessAds">Business & Ads</h4><p class="text-gray-600" data-translate-key="businessAdsDesc">Ads BIN, Business Manager & Page Verify.</p></div>
+                <div class="service-card"><i class="icon fab fa-whatsapp"></i><h4 class="text-xl font-bold mb-2 text-blue-700" data-translate-key="whatsappVerify">WhatsApp Verify</h4></div>
+                <div class="service-card"><i class="icon fas fa-exchange-alt"></i><h4 class="text-xl font-bold mb-2 text-blue-700" data-translate-key="payoutFix">Payout Issue Fix</h4><p class="text-gray-600" data-translate-key="payoutFixDesc">Transfer, Restriction, Disabled Fix.</p></div>
             </div>
         </section>
-
-        <!-- Subscriptions Section -->
         <section class="mb-16">
-            <h3 class="section-title">Subscriptions</h3>
+            <h3 class="section-title" data-translate-key="subscriptionsTitle">Subscriptions</h3>
             <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
-                <div class="service-card"><i class="icon fas fa-film"></i><h4 class="text-lg font-semibold text-gray-800">Netflix Premium</h4></div>
-                <div class="service-card"><i class="icon fab fa-telegram-plane"></i><h4 class="text-lg font-semibold text-gray-800">Telegram Premium</h4></div>
-                <div class="service-card"><i class="icon fab fa-twitter"></i><h4 class="text-lg font-semibold text-gray-800">Twitter (X) Premium</h4></div>
-                <div class="service-card"><i class="icon fas fa-robot"></i><h4 class="text-lg font-semibold text-gray-800">Google AI Pro</h4></div>
-                <div class="service-card"><i class="icon fas fa-brain"></i><h4 class="text-lg font-semibold text-gray-800">ChatGPT Plus (GPT-4)</h4></div>
-                <div class="service-card"><i class="icon fab fa-youtube"></i><h4 class="text-lg font-semibold text-gray-800">YouTube Premium</h4></div>
-                <div class="service-card"><i class="icon fas fa-clock"></i><h4 class="text-lg font-semibold text-gray-800">YT/FB Watch Time</h4></div>
-                <div class="service-card"><i class="icon fas fa-shield-alt"></i><h4 class="text-lg font-semibold text-gray-800">Paid VPNs</h4></div>
-                <div class="service-card"><i class="icon fas fa-laptop-code"></i><h4 class="text-lg font-semibold text-gray-800">Paid Software</h4></div>
+                <div class="service-card"><i class="icon fas fa-film"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="subNetflix">Netflix Premium</h4></div>
+                <div class="service-card"><i class="icon fab fa-telegram-plane"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="subTelegram">Telegram Premium</h4></div>
+                <div class="service-card"><i class="icon fab fa-twitter"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="subTwitter">Twitter (X) Premium</h4></div>
+                <div class="service-card"><i class="icon fas fa-robot"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="subGoogleAI">Google AI Pro</h4></div>
+                <div class="service-card"><i class="icon fas fa-brain"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="subChatGPT">ChatGPT Plus (GPT-4)</h4></div>
+                <div class="service-card"><i class="icon fab fa-youtube"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="subYoutube">YouTube Premium</h4></div>
+                <div class="service-card"><i class="icon fas fa-clock"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="subWatchTime">YT/FB Watch Time</h4></div>
+                <div class="service-card"><i class="icon fas fa-shield-alt"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="subVPN">Paid VPNs</h4></div>
+                <div class="service-card"><i class="icon fas fa-laptop-code"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="subSoftware">Paid Software</h4></div>
             </div>
         </section>
-
-        <!-- Other Services Section -->
         <section class="mb-16">
-            <h3 class="section-title">Other Digital Services</h3>
+            <h3 class="section-title" data-translate-key="otherServicesTitle">Other Digital Services</h3>
              <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="service-card"><i class="icon fas fa-desktop"></i><h4 class="text-lg font-semibold text-gray-800">RDP Access</h4></div>
-                <div class="service-card"><i class="icon fas fa-graduation-cap"></i><h4 class="text-lg font-semibold text-gray-800">Paid Tutorials & Courses</h4></div>
-                <div class="service-card"><i class="icon fas fa-mobile-alt"></i><h4 class="text-lg font-semibold text-gray-800">Mini Android App Dev</h4></div>
-                <div class="service-card"><i class="icon fas fa-wifi"></i><h4 class="text-lg font-semibold text-gray-800">WIFI BDIX Bypass Proxy</h4></div>
+                <div class="service-card"><i class="icon fas fa-desktop"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="otherRDP">RDP Access</h4></div>
+                <div class="service-card"><i class="icon fas fa-graduation-cap"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="otherCourses">Paid Tutorials & Courses</h4></div>
+                <div class="service-card"><i class="icon fas fa-mobile-alt"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="otherAppDev">Mini Android App Dev</h4></div>
+                <div class="service-card"><i class="icon fas fa-wifi"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="otherProxy">WIFI BDIX Bypass Proxy</h4></div>
             </div>
         </section>
-        
-        <!-- Offline (Android) Services Section -->
         <section>
-            <h3 class="section-title">Offline (Android Only) Services</h3>
+            <h3 class="section-title" data-translate-key="offlineServicesTitle">Offline (Android Only) Services</h3>
             <div class="grid md:grid-cols-2 lg:grid-cols-5 gap-8">
-                <div class="service-card"><i class="icon fas fa-tools"></i><h4 class="text-lg font-semibold text-gray-800">Dead Phone Repair</h4></div>
-                <div class="service-card"><i class="icon fas fa-rocket"></i><h4 class="text-lg font-semibold text-gray-800">CPU Overclock</h4></div>
-                <div class="service-card"><i class="icon fas fa-hashtag"></i><h4 class="text-lg font-semibold text-gray-800">Root Any Android</h4></div>
-                <div class="service-card"><i class="icon fas fa-arrow-up"></i><h4 class="text-lg font-semibold text-gray-800">OS Upgrade</h4></div>
-                <div class="service-card"><i class="icon fas fa-sync-alt"></i><h4 class="text-lg font-semibold text-gray-800">Bootloop Fix</h4></div>
-                <div class="service-card"><i class="icon fas fa-video"></i><h4 class="text-lg font-semibold text-gray-800">Boot Animation Change</h4></div>
-                <div class="service-card"><i class="icon fas fa-lock-open"></i><h4 class="text-lg font-semibold text-gray-800">Lock / Unlock</h4></div>
-                <div class="service-card"><i class="icon fas fa-key"></i><h4 class="text-lg font-semibold text-gray-800">FRP Lock Bypass</h4></div>
-                <div class="service-card"><i class="icon fas fa-cogs"></i><h4 class="text-lg font-semibold text-gray-800">Custom OS Install</h4></div>
-                <div class="service-card"><i class="icon fas fa-download"></i><h4 class="text-lg font-semibold text-gray-800">Unsupported App Install</h4></div>
-                <div class="service-card"><i class="icon fas fa-bolt"></i><h4 class="text-lg font-semibold text-gray-800">Software Flash</h4></div>
-                <div class="service-card"><i class="icon fas fa-trash-alt"></i><h4 class="text-lg font-semibold text-gray-800">Delete System Apps</h4></div>
-                <div class="service-card"><i class="icon fas fa-terminal"></i><h4 class="text-lg font-semibold text-gray-800">Custom Kernel Install</h4></div>
-                <div class="service-card"><i class="icon fab fa-windows"></i><h4 class="text-lg font-semibold text-gray-800">Install OS on Phone</h4></div>
-                <div class="service-card"><i class="icon fas fa-plus-circle"></i><h4 class="text-lg font-semibold text-gray-800">And Many More...</h4></div>
+                <div class="service-card"><i class="icon fas fa-tools"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineRepair">Dead Phone Repair</h4></div>
+                <div class="service-card"><i class="icon fas fa-rocket"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineCPU">CPU Overclock</h4></div>
+                <div class="service-card"><i class="icon fas fa-hashtag"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineRoot">Root Any Android</h4></div>
+                <div class="service-card"><i class="icon fas fa-arrow-up"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineOSUpgrade">OS Upgrade</h4></div>
+                <div class="service-card"><i class="icon fas fa-sync-alt"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineBootloop">Bootloop Fix</h4></div>
+                <div class="service-card"><i class="icon fas fa-video"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineAnimation">Boot Animation Change</h4></div>
+                <div class="service-card"><i class="icon fas fa-lock-open"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineLock">Lock / Unlock</h4></div>
+                <div class="service-card"><i class="icon fas fa-key"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineFRP">FRP Lock Bypass</h4></div>
+                <div class="service-card"><i class="icon fas fa-cogs"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineCustomOS">Custom OS Install</h4></div>
+                <div class="service-card"><i class="icon fas fa-download"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineUnsupported">Unsupported App Install</h4></div>
+                <div class="service-card"><i class="icon fas fa-bolt"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineFlash">Software Flash</h4></div>
+                <div class="service-card"><i class="icon fas fa-trash-alt"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineDelete">Delete System Apps</h4></div>
+                <div class="service-card"><i class="icon fas fa-terminal"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineKernel">Custom Kernel Install</h4></div>
+                <div class="service-card"><i class="icon fab fa-windows"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineInstallOS">Install OS on Phone</h4></div>
+                <div class="service-card"><i class="icon fas fa-plus-circle"></i><h4 class="text-lg font-semibold text-gray-800" data-translate-key="offlineMore">And Many More...</h4></div>
             </div>
         </section>
-
     </main>
 
-    <!-- Contact / Footer Section -->
+    <!-- Footer -->
     <footer id="contact" class="bg-gray-800 text-white mt-16 py-12">
         <div class="container mx-auto px-6 text-center">
-            <h3 class="text-3xl font-bold mb-4">Get in Touch</h3>
-            <p class="text-gray-300 mb-8 max-w-2xl mx-auto">Follow our page for updates or contact us directly through WhatsApp or Messenger.</p>
+            <h3 class="text-3xl font-bold mb-4" data-translate-key="footerTitle">Get in Touch</h3>
+            <p class="text-gray-300 mb-8 max-w-2xl mx-auto" data-translate-key="footerSubtitle">Follow our page for updates or contact us directly through WhatsApp or Messenger.</p>
             <div class="flex flex-wrap justify-center items-center">
                  <a href="https://www.facebook.com/digifix.agency" target="_blank" class="cta-button facebook-btn text-lg">
-                    <i class="fab fa-facebook-f mr-3"></i> Visit Our Page
+                    <i class="fab fa-facebook-f mr-3"></i> <span data-translate-key="footerBtnPage">Visit Our Page</span>
                 </a>
                 <a href="https://wa.me/16506687797" target="_blank" class="cta-button whatsapp-btn text-lg">
-                    <i class="fab fa-whatsapp mr-3"></i> Chat on WhatsApp
+                    <i class="fab fa-whatsapp mr-3"></i> <span data-translate-key="footerBtnWhatsapp">Chat on WhatsApp</span>
                 </a>
                 <a href="https://m.me/tanjim.ahmmed.shuvo" target="_blank" class="cta-button messenger-btn text-lg">
-                    <i class="fab fa-facebook-messenger mr-3"></i> Message on Facebook
+                    <i class="fab fa-facebook-messenger mr-3"></i> <span data-translate-key="footerBtnMessenger">Message on Facebook</span>
                 </a>
             </div>
             <div class="mt-10 border-t border-gray-700 pt-6">
-                <p class="text-gray-400">&copy; 2025 Digifix BD. All Rights Reserved.</p>
+                <p class="text-gray-400" data-translate-key="footerCopyright">&copy; 2025 Digifix BD. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
+    <!-- AI Helper Modal -->
+    <div id="ai-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-gray-800" data-translate-key="modalTitle">✨ AI Service Helper</h3>
+                <button id="close-modal-btn" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            </div>
+            <p class="text-gray-600 mb-4" data-translate-key="modalSubtitle">Describe what you need in the box below. (Example: I need a Netflix account)</p>
+            <textarea id="user-problem" class="w-full p-2 border border-gray-300 rounded-lg h-28" data-translate-key="modalPlaceholder" placeholder="Write your requirement here..."></textarea>
+            <button id="find-service-btn" class="w-full mt-4 cta-button bg-blue-600 text-white hover:bg-blue-700" data-translate-key="modalBtnFind">Find My Service</button>
+            <div id="loader" class="hidden loader"></div>
+            <div id="ai-response" class="mt-4 p-4 bg-gray-100 rounded-lg hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- TRANSLATION DATA ---
+        const translations = {
+            en: {
+                pageTitle: "Digifix BD - Meta Verified, Subscriptions & Digital Services in Bangladesh",
+                metaDescription: "Digifix BD offers reliable digital services in Bangladesh, including Facebook Meta Verification, Netflix, YouTube Premium, and various Android solutions at a low price. Contact Tanjim Ahmmed Shuvo directly or our agency, Digifix BD.",
+                navServices: "Services",
+                navContact: "Contact",
+                navVisitPage: "Visit Page",
+                heroTitle: "Get Meta Verified",
+                heroSubtitle: "Low Price, Fast Delivery. Build Your Trust & Boost Your Brand!",
+                heroBtnWhatsapp: "Contact on WhatsApp",
+                heroBtnMessenger: "Send a Message",
+                aiHelperTitle: "Not Sure Which Service You Need?",
+                aiHelperSubtitle: "Tell our AI Helper what you need, and it will help you find the right service.",
+                aiHelperBtn: "Launch AI Service Helper",
+                onlineServicesTitle: "Online Services",
+                fbMetaVerified: "Facebook Meta Verified",
+                fbMetaVerifiedDesc: "Blue badge at a low price.",
+                idUnlock: "ID Unlock & Safety",
+                idUnlockDesc: "Facebook Lock ID Unlock & Running Verify.",
+                instaThreadsVerify: "Instagram & Threads Verify",
+                businessAds: "Business & Ads",
+                businessAdsDesc: "Ads BIN, Business Manager & Page Verify.",
+                whatsappVerify: "WhatsApp Verify",
+                payoutFix: "Payout Issue Fix",
+                payoutFixDesc: "Transfer, Restriction, Disabled Fix.",
+                subscriptionsTitle: "Subscriptions",
+                subNetflix: "Netflix Premium",
+                subTelegram: "Telegram Premium",
+                subTwitter: "Twitter (X) Premium",
+                subGoogleAI: "Google AI Pro",
+                subChatGPT: "ChatGPT Plus (GPT-4)",
+                subYoutube: "YouTube Premium",
+                subWatchTime: "YT/FB Watch Time",
+                subVPN: "Paid VPNs",
+                subSoftware: "Paid Software",
+                otherServicesTitle: "Other Digital Services",
+                otherRDP: "RDP Access",
+                otherCourses: "Paid Tutorials & Courses",
+                otherAppDev: "Mini Android App Dev",
+                otherProxy: "WIFI BDIX Bypass Proxy",
+                offlineServicesTitle: "Offline (Android Only) Services",
+                offlineRepair: "Dead Phone Repair",
+                offlineCPU: "CPU Overclock",
+                offlineRoot: "Root Any Android",
+                offlineOSUpgrade: "OS Upgrade",
+                offlineBootloop: "Bootloop Fix",
+                offlineAnimation: "Boot Animation Change",
+                offlineLock: "Lock / Unlock",
+                offlineFRP: "FRP Lock Bypass",
+                offlineCustomOS: "Custom OS Install",
+                offlineUnsupported: "Unsupported App Install",
+                offlineFlash: "Software Flash",
+                offlineDelete: "Delete System Apps",
+                offlineKernel: "Custom Kernel Install",
+                offlineInstallOS: "Install OS on Phone",
+                offlineMore: "And Many More...",
+                footerTitle: "Get in Touch",
+                footerSubtitle: "Follow our page for updates or contact us directly through WhatsApp or Messenger.",
+                footerBtnPage: "Visit Our Page",
+                footerBtnWhatsapp: "Chat on WhatsApp",
+                footerBtnMessenger: "Message on Facebook",
+                footerCopyright: "© 2025 Digifix BD. All Rights Reserved.",
+                modalTitle: "✨ AI Service Helper",
+                modalSubtitle: "Describe what you need in the box below. (Example: I need a Netflix account)",
+                modalPlaceholder: "Write your requirement here...",
+                modalBtnFind: "Find My Service",
+                geminiError: "Something went wrong. Please try again later.",
+                geminiEmptyError: "Please write your requirement."
+            },
+            bn: {
+                pageTitle: "Digifix BD - মেটা ভেরিফাইড, সাবস্ক্রিপশন ও ডিজিটাল সার্ভিস",
+                metaDescription: "Digifix BD বাংলাদেশে ফেসবুক মেটা ভেরিফিকেশন, নেটফ্লিক্স, ইউটিউব প্রিমিয়াম এবং বিভিন্ন অ্যান্ড্রয়েড সমাধানসহ নির্ভরযোগ্য ডিজিটাল পরিষেবা অফার করে। তানজিম আহমেদ শুভ বা আমাদের এজেন্সি ডিজিফিক্স বিডি-এর সাথে যোগাযোগ করুন।",
+                navServices: "সার্ভিসসমূহ",
+                navContact: "যোগাযোগ",
+                navVisitPage: "পেজ ভিজিট করুন",
+                heroTitle: "মেটা ভেরিফাইড করুন",
+                heroSubtitle: "সুলভ মূল্য, দ্রুত ডেলিভারি। আপনার বিশ্বাস তৈরি করুন এবং ব্র্যান্ডকে এগিয়ে নিন!",
+                heroBtnWhatsapp: "WhatsApp-এ যোগাযোগ",
+                heroBtnMessenger: "মেসেজ পাঠান",
+                aiHelperTitle: "কোন সার্ভিসটি আপনার জন্য নিশ্চিত নন?",
+                aiHelperSubtitle: "আমাদের AI Helper-কে আপনার প্রয়োজন বলুন, এবং সে আপনাকে সঠিক সার্ভিসটি খুঁজে দিতে সাহায্য করবে।",
+                aiHelperBtn: "AI সার্ভিস হেল্পার চালু করুন",
+                onlineServicesTitle: "অনলাইন সার্ভিসসমূহ",
+                fbMetaVerified: "ফেসবুক মেটা ভেরিফাইড",
+                fbMetaVerifiedDesc: "সুলভ মূল্যে ব্লু ব্যাজ।",
+                idUnlock: "আইডি আনলক ও সুরক্ষা",
+                idUnlockDesc: "ফেসবুক লক আইডি আনলক এবং রানিং ভেরিফাই।",
+                instaThreadsVerify: "ইন্সটাগ্রাম ও থ্রেডস ভেরিফাই",
+                businessAds: "বিজনেস ও অ্যাডস",
+                businessAdsDesc: "অ্যাডস বিন, বিজনেস ম্যানেজার ও পেজ ভেরিফাই।",
+                whatsappVerify: "হোয়াটসঅ্যাপ ভেরিফাই",
+                payoutFix: "পে-আউট সমস্যার সমাধান",
+                payoutFixDesc: "ট্রান্সফার, রেস্ট্রিকশন, ডিজেবল সমস্যার সমাধান।",
+                subscriptionsTitle: "সাবস্ক্রিপশনসমূহ",
+                subNetflix: "নেটফ্লিক্স প্রিমিয়াম",
+                subTelegram: "টেলিগ্রাম প্রিমিয়াম",
+                subTwitter: "টুইটার (X) প্রিমিয়াম",
+                subGoogleAI: "গুগল এআই প্রো",
+                subChatGPT: "চ্যাটজিপিটি প্লাস (GPT-4)",
+                subYoutube: "ইউটিউব প্রিমিয়াম",
+                subWatchTime: "ইউটিউব/ফেসবুক ওয়াচ টাইম",
+                subVPN: "পেইড ভিপিএন",
+                subSoftware: "পেইড সফটওয়্যার",
+                otherServicesTitle: "অন্যান্য ডিজিটাল সার্ভিস",
+                otherRDP: "আরডিপি অ্যাক্সেস",
+                otherCourses: "পেইড টিউটোরিয়াল ও কোর্স",
+                otherAppDev: "মিনি অ্যান্ড্রয়েড অ্যাপ ডেভলপমেন্ট",
+                otherProxy: "ওয়াইফাই BDIX বাইপাস প্রক্সি",
+                offlineServicesTitle: "অফলাইন সার্ভিস (শুধুমাত্র অ্যান্ড্রয়েড)",
+                offlineRepair: "ডেড ফোন মেরামত",
+                offlineCPU: "সিপিইউ ওভারক্লক",
+                offlineRoot: "যেকোনো অ্যান্ড্রয়েড রুট",
+                offlineOSUpgrade: "ওএস আপগ্রেড",
+                offlineBootloop: "বুটলুপ ফিক্স",
+                offlineAnimation: "বুট অ্যানিমেশন পরিবর্তন",
+                offlineLock: "লক / আনলক",
+                offlineFRP: "এফআরপি লক বাইপাস",
+                offlineCustomOS: "কাস্টম ওএস ইনস্টল",
+                offlineUnsupported: "আনসাপোর্টেড অ্যাপ ইনস্টল",
+                offlineFlash: "সফটওয়্যার ফ্ল্যাশ",
+                offlineDelete: "সিস্টেম অ্যাপ ডিলিট",
+                offlineKernel: "কাস্টম কার্নেল ইনস্টল",
+                offlineInstallOS: "ফোনে ওএস ইনস্টল",
+                offlineMore: "এবং আরও অনেক...",
+                footerTitle: "যোগাযোগ করুন",
+                footerSubtitle: "আপডেটের জন্য আমাদের পেজ ফলো করুন অথবা সরাসরি WhatsApp বা Messenger-এ যোগাযোগ করুন।",
+                footerBtnPage: "আমাদের পেজ ভিজিট করুন",
+                footerBtnWhatsapp: "WhatsApp-এ চ্যাট করুন",
+                footerBtnMessenger: "ফেসবুকে মেসেজ দিন",
+                footerCopyright: "© ২০২৫ ডিজিফিক্স বিডি। সর্বস্বত্ব সংরক্ষিত।",
+                modalTitle: "✨ এআই সার্ভিস হেল্পার",
+                modalSubtitle: "আপনার কি দরকার, সেটা নিচের বক্সে বিস্তারিত লিখুন। (উদাহরণ: আমার নেটফ্লিক্স একাউন্ট লাগবে)",
+                modalPlaceholder: "এখানে আপনার প্রয়োজন লিখুন...",
+                modalBtnFind: "আমার সার্ভিস খুঁজুন",
+                geminiError: "কোনো একটি সমস্যা হয়েছে। দয়া করে, কিছুক্ষণ পর আবার চেষ্টা করুন।",
+                geminiEmptyError: "দয়া করে, আপনার প্রয়োজন লিখুন।"
+            }
+        };
+
+        // --- LANGUAGE SWITCHER LOGIC ---
+        const languageSwitcher = document.getElementById('language-switcher');
+        const translatableElements = document.querySelectorAll('[data-translate-key]');
+
+        const setLanguage = (lang) => {
+            translatableElements.forEach(el => {
+                const key = el.getAttribute('data-translate-key');
+                const translation = translations[lang][key];
+                if (translation !== undefined) {
+                    if (el.tagName === 'META' && el.name === 'description') {
+                        el.setAttribute('content', translation);
+                    } else if (el.tagName === 'TITLE') {
+                        el.textContent = translation;
+                    } else if (el.hasAttribute('placeholder')) {
+                        el.setAttribute('placeholder', translation);
+                    }
+                    else {
+                        el.innerHTML = translation;
+                    }
+                }
+            });
+            document.documentElement.lang = lang;
+            localStorage.setItem('language', lang);
+            languageSwitcher.value = lang;
+        };
+
+        languageSwitcher.addEventListener('change', (event) => {
+            setLanguage(event.target.value);
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('language');
+            const browserLang = navigator.language.split('-')[0];
+            
+            const defaultLang = (browserLang === 'bn' && !savedLang) ? 'bn' : 'en';
+            
+            const langToSet = savedLang || defaultLang;
+            setLanguage(langToSet);
+        });
+
+        // --- AI HELPER MODAL & GEMINI API LOGIC ---
+        const aiHelperBtn = document.getElementById('ai-helper-btn');
+        const aiModal = document.getElementById('ai-modal');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const findServiceBtn = document.getElementById('find-service-btn');
+        const userProblemTextarea = document.getElementById('user-problem');
+        const loader = document.getElementById('loader');
+        const aiResponseDiv = document.getElementById('ai-response');
+
+        aiHelperBtn.addEventListener('click', () => aiModal.classList.add('active'));
+        
+        const closeModal = () => aiModal.classList.remove('active');
+        closeModalBtn.addEventListener('click', closeModal);
+        aiModal.addEventListener('click', (e) => {
+            if (e.target === aiModal) closeModal();
+        });
+
+        const allServices = `
+            Online Services: Facebook Meta Verified, Facebook Lock ID Unlock, Running verify, Instagram + Threads Verification, Facebook Ads BIN, Business Manager Verify, Page Verify, WhatsApp Verify, Payout Fix.
+            Subscriptions: Netflix, Telegram, Twitter (X), Google AI Pro, ChatGPT Plus, YouTube Premium, Watch Time, VPN, Paid Software.
+            Other: RDP, Paid Tutorials, Mini Android app dev, WIFI BDIX Proxy.
+            Offline (Android): Dead Phone Repair, CPU Overclock, Root, OS Upgrade, Bootloop Fix, Boot animation Change, Lock Unlock, FRP bypass, Custom os install, Not supported app install, Software Flash, Delete system app, Custom kernel install, Windows/Linux/Mac os install.
+        `;
+
+        findServiceBtn.addEventListener('click', async () => {
+            const userQuery = userProblemTextarea.value;
+            const currentLang = localStorage.getItem('language') || 'en';
+
+            if (!userQuery.trim()) {
+                aiResponseDiv.textContent = translations[currentLang].geminiEmptyError;
+                aiResponseDiv.classList.remove('hidden');
+                return;
+            }
+
+            loader.classList.remove('hidden');
+            aiResponseDiv.classList.add('hidden');
+            findServiceBtn.disabled = true;
+
+            const responseLanguage = currentLang === 'bn' ? 'Bangla (using the Latin alphabet, not Bengali script)' : 'English';
+            const greeting = currentLang === 'bn' ? 'Apnar proyojon onujayi,' : 'Based on your requirement,';
+
+            const prompt = `
+                You are a friendly and helpful assistant for 'Digifix BD'. 
+                A customer has described their need as: "${userQuery}".
+                Your task is to recommend the most relevant service(s) from the list below. 
+                1. Identify the best matching service(s).
+                2. Explain in simple terms why it's a good fit.
+                3. If no service matches, politely suggest they contact the owner directly.
+                
+                Respond in simple, helpful, and encouraging ${responseLanguage}.
+
+                Available services:
+                ${allServices}
+
+                Start your response with a friendly greeting like "${greeting}".
+            `;
+
+            try {
+                let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                const payload = { contents: chatHistory };
+                const apiKey = "AIzaSyBPkQ_en57ffDtjhTG41zdI3nV6zeKiwZ4"; // API key will be injected by the environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
+
+                const result = await response.json();
+                
+                let text = translations[currentLang].geminiError;
+                if (result.candidates && result.candidates[0]?.content?.parts?.[0]?.text) {
+                    text = result.candidates[0].content.parts[0].text;
+                }
+                
+                aiResponseDiv.innerHTML = text.replace(/\n/g, '<br>');
+
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                aiResponseDiv.textContent = translations[currentLang].geminiError;
+            } finally {
+                loader.classList.add('hidden');
+                aiResponseDiv.classList.remove('hidden');
+                findServiceBtn.disabled = false;
+            }
+        });
+    </script>
 </body>
 </html>
-
