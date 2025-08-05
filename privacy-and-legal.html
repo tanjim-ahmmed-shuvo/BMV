@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy & Legal Information – Digifix BD</title>
+
+    <style>
+
+        body {
+            font-family: 'Inter', Arial, sans-serif; 
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4; 
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; 
+            -webkit-font-smoothing: antialiased; 
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden; 
+        }
+
+        @keyframes slideInFromTop {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header {
+            background-color: #0d1c33; 
+            color: white;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            animation: slideInFromTop 0.8s ease-out forwards; 
+        }
+
+        header h1 {
+            margin: 10px 0 0; 
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #ffffff; 
+        }
+
+        .header-logo {
+            max-width: 150px; 
+            height: auto;
+            margin-bottom: 10px; 
+            border-radius: 5px; 
+        }
+
+        main {
+            flex-grow: 1;
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: white; 
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            opacity: 0; 
+            transform: translateY(20px); 
+            animation: fadeInUp 0.7s ease-out forwards; 
+        }
+
+        section:nth-of-type(1) { animation-delay: 0.2s; }
+        section:nth-of-type(2) { animation-delay: 0.4s; }
+        section:nth-of-type(3) { animation-delay: 0.6s; }
+        section:nth-of-type(4) { animation-delay: 0.8s; }
+        section:nth-of-type(5) { animation-delay: 1.0s; }
+        section:nth-of-type(6) { animation-delay: 1.2s; } 
+
+        section:last-of-type {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        section h2 {
+            color: #2b9ddf; 
+            border-bottom: 3px solid #1fb4a2; 
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+
+        section h3 {
+            color: #0d1c33; 
+            margin-top: 30px;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 25px;
+            padding: 0;
+            margin-bottom: 15px;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        strong {
+            color: #2b9ddf; 
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: auto;
+            background-color: #0d1c33; 
+            color: white;
+            font-size: 0.9em;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        @media (min-width: 769px) {
+            header {
+                flex-direction: row; 
+                justify-content: center; 
+                gap: 20px; 
+            }
+            header h1 {
+                margin: 0; 
+            }
+            .header-logo {
+                margin-bottom: 0; 
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            main {
+                margin: 20px 10px;
+                padding: 20px;
+            }
+            section h2 {
+                font-size: 1.5em;
+            }
+            section h3 {
+                font-size: 1.3em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+            main {
+                margin: 15px 5px;
+                padding: 15px;
+            }
+            ul {
+                margin-left: 15px;
+            }
+            .header-logo {
+                max-width: 120px; 
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+
+        <img src="img.png" alt="Digifix BD Logo" class="header-logo" onerror="this.onerror=null;this.src='https://placehold.co/150x50/0d1c33/ffffff?text=Logo+Error';">
+        <h1>Privacy & Legal Information – Digifix BD</h1>
+    </header>
+
+    <main>
+        <section id="introduction">
+            <p>At Digifix BD, we are committed to protecting your privacy and maintaining transparency in how we handle your data.</p>
+        </section>
+
+        <section id="client-info-handling">
+            <h2>📌 Client Information Handling</h2>
+            <p>We may collect certain credentials or personal information from our clients when providing services such as Facebook-related solutions, subscription management, or technical support. This may include:</p>
+            <ul>
+                <li><strong>Profile access:</strong> (when required to solve specific issues)</li>
+                <li><strong>Personal details:</strong> Name, phone number, email, profile URL, etc.</li>
+            </ul>
+            <p>These details are stored securely only when necessary and are used solely to:</p>
+            <ul>
+                <li>Provide uninterrupted support</li>
+                <li>Quickly locate client records</li>
+                <li>Send service updates via SMS or email (e.g., subscription renewal alerts)</li>
+            </ul>
+        </section>
+
+        <section id="limited-access">
+            <h2>🔐 Limited Access & Responsibility</h2>
+            <p>We only access your accounts to the minimum extent required to solve the issue at hand. We never misuse, modify, or tamper with any profile data beyond the scope of the requested service.</p>
+        </section>
+
+        <section id="no-data-sharing">
+            <h2>🚫 No Data Sharing or Selling</h2>
+            <p>Your information is never shared, sold, or transferred to any third party under any circumstances.</p>
+        </section>
+
+        <section id="permission-based-actions">
+            <h2>✅ Permission-Based Actions</h2>
+            <p>If a new step or access is required during any process, we always seek your permission first before proceeding.</p>
+            <p>Your trust is our top priority.</p>
+        </section>
+
+        <section id="contact">
+            <h3>Questions or Concerns?</h3>
+            <p>If you have any questions or concerns about our data handling process, feel free to DM us directly. 📥</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Digifix BD. All rights reserved.</p>
+    </footer>
+
+    <script>
+
+        window.onload = function() {
+            console.log("Digifix BD Privacy Page JavaScript loaded!");
+
+        };
+    </script>
+</body>
+</html>
