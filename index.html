@@ -16,51 +16,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .hero-gradient {
-            background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC);
-        }
-        .section-title {
-            font-weight: 900;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 3rem;
-            color: #1a202c;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        .hero-gradient { background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC); }
+        .section-title { font-weight: 900; font-size: 2.5rem; text-align: center; margin-bottom: 3rem; color: #1a202c; }
         .service-card {
-            background-color: white;
-            border-radius: 12px;
-            padding: 2rem 1.5rem;
+            background-color: white; border-radius: 12px; padding: 2rem 1.5rem;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center;
         }
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        .service-card .icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #4364F7;
-        }
+        .service-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+        .service-card .icon { font-size: 2.5rem; margin-bottom: 1rem; color: #4364F7; }
         .cta-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-            margin: 0.25rem;
+            display: inline-flex; align-items: center; justify-content: center; padding: 0.75rem 1.5rem;
+            border-radius: 8px; font-weight: 600; text-decoration: none;
+            transition: background-color 0.3s ease; margin: 0.25rem;
         }
         .whatsapp-btn { background-color: #25D366; color: white; }
         .whatsapp-btn:hover { background-color: #1EBE57; }
@@ -68,24 +38,50 @@
         .messenger-btn:hover { background-color: #0073E0; }
         .facebook-btn { background-color: #1877F2; color: white; }
         .facebook-btn:hover { background-color: #166FE5; }
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.5); display: flex; align-items: center;
-            justify-content: center; z-index: 1000; opacity: 0;
-            visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+        
+        /* Chatbot Styles */
+        #chat-toggle-btn {
+            position: fixed; bottom: 20px; right: 20px;
+            background-color: #0052D4; color: white;
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer; z-index: 999; transition: transform 0.2s;
         }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-content {
-            background: white; padding: 2rem; border-radius: 12px;
-            width: 90%; max-width: 500px; transform: scale(0.9); transition: transform 0.3s;
+        #chat-toggle-btn:hover { transform: scale(1.1); }
+        #chat-window {
+            position: fixed; bottom: 100px; right: 20px;
+            width: 90%; max-width: 370px; height: 500px;
+            background: white; border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: flex; flex-direction: column;
+            overflow: hidden; z-index: 1000;
+            transform: scale(0.9); opacity: 0; visibility: hidden;
+            transform-origin: bottom right;
+            transition: transform 0.3s, opacity 0.3s, visibility 0.3s;
         }
-        .modal-overlay.active .modal-content { transform: scale(1); }
-        .loader {
-            border: 4px solid #f3f3f3; border-top: 4px solid #3498db;
+        #chat-window.active { transform: scale(1); opacity: 1; visibility: visible; }
+        #chat-header { background: linear-gradient(135deg, #0052D4, #4364F7); color: white; padding: 1rem; font-weight: bold; }
+        #chat-messages { flex-grow: 1; padding: 1rem; overflow-y: auto; }
+        .chat-message { margin-bottom: 0.75rem; display: flex; flex-direction: column; }
+        .chat-message.bot .message-bubble { background-color: #f1f5f9; color: #1e293b; align-self: flex-start; }
+        .chat-message.user .message-bubble { background-color: #3b82f6; color: white; align-self: flex-end; }
+        .message-bubble { padding: 0.5rem 1rem; border-radius: 1.25rem; max-width: 80%; line-height: 1.5; }
+        #chat-input-container { border-top: 1px solid #e5e7eb; padding: 0.75rem; display: flex; }
+        #chat-input { flex-grow: 1; border: 1px solid #d1d5db; border-radius: 20px; padding: 0.5rem 1rem; outline: none; }
+        #chat-send-btn {
+            background: #0052D4; color: white; border: none;
             border-radius: 50%; width: 40px; height: 40px;
-            animation: spin 1s linear infinite; margin: 1rem auto;
+            margin-left: 0.5rem; cursor: pointer; display: flex;
+            align-items: center; justify-content: center; font-size: 18px;
         }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .typing-indicator { color: #6b7280; font-style: italic; font-size: 0.875rem; }
+        .chat-button {
+            background-color: #e5e7eb; border: 1px solid #d1d5db;
+            padding: 0.5rem 1rem; border-radius: 20px;
+            margin: 0.25rem; cursor: pointer;
+        }
+        .chat-button:hover { background-color: #d1d5db; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -106,7 +102,6 @@
                 <a href="https://www.facebook.com/digifix.agency" target="_blank" class="cta-button facebook-btn text-sm">
                     <i class="fab fa-facebook-f mr-2"></i> <span data-translate-key="navVisitPage">Visit Page</span>
                 </a>
-                <!-- Language Switcher -->
                 <div class="relative">
                     <select id="language-switcher" class="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         <option value="en">English</option>
@@ -138,19 +133,8 @@
         </div>
     </section>
 
-    <!-- AI Helper Section -->
-    <section class="py-12 bg-blue-50">
-        <div class="container mx-auto px-6 text-center">
-            <h3 class="text-3xl font-bold text-gray-800 mb-4" data-translate-key="aiHelperTitle">Not Sure Which Service You Need?</h3>
-            <p class="text-gray-600 mb-6 max-w-2xl mx-auto" data-translate-key="aiHelperSubtitle">Tell our AI Helper what you need, and it will help you find the right service.</p>
-            <button id="ai-helper-btn" class="cta-button bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-transform">
-                ✨ <span data-translate-key="aiHelperBtn">Launch AI Service Helper</span>
-            </button>
-        </div>
-    </section>
-
     <main id="services" class="container mx-auto px-6 py-16">
-        <!-- Online Services Section -->
+        <!-- Service sections -->
         <section class="mb-16">
             <h3 class="section-title" data-translate-key="onlineServicesTitle">Online Services</h3>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -237,18 +221,16 @@
         </div>
     </footer>
 
-    <!-- AI Helper Modal -->
-    <div id="ai-modal" class="modal-overlay">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-2xl font-bold text-gray-800" data-translate-key="modalTitle">✨ AI Service Helper</h3>
-                <button id="close-modal-btn" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
-            </div>
-            <p class="text-gray-600 mb-4" data-translate-key="modalSubtitle">Describe what you need in the box below. (Example: I need a Netflix account)</p>
-            <textarea id="user-problem" class="w-full p-2 border border-gray-300 rounded-lg h-28" data-translate-key="modalPlaceholder" placeholder="Write your requirement here..."></textarea>
-            <button id="find-service-btn" class="w-full mt-4 cta-button bg-blue-600 text-white hover:bg-blue-700" data-translate-key="modalBtnFind">Find My Service</button>
-            <div id="loader" class="hidden loader"></div>
-            <div id="ai-response" class="mt-4 p-4 bg-gray-100 rounded-lg hidden"></div>
+    <!-- Chatbot UI -->
+    <button id="chat-toggle-btn">
+        <i class="fas fa-comments"></i>
+    </button>
+    <div id="chat-window">
+        <div id="chat-header" data-translate-key="chatHeader">AI Assistant</div>
+        <div id="chat-messages"></div>
+        <div id="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Type your message..." data-translate-key="chatPlaceholder">
+            <button id="chat-send-btn"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
@@ -265,9 +247,6 @@
                 heroSubtitle: "Low Price, Fast Delivery. Build Your Trust & Boost Your Brand!",
                 heroBtnWhatsapp: "Contact on WhatsApp",
                 heroBtnMessenger: "Send a Message",
-                aiHelperTitle: "Not Sure Which Service You Need?",
-                aiHelperSubtitle: "Tell our AI Helper what you need, and it will help you find the right service.",
-                aiHelperBtn: "Launch AI Service Helper",
                 onlineServicesTitle: "Online Services",
                 fbMetaVerified: "Facebook Meta Verified",
                 fbMetaVerifiedDesc: "Blue badge at a low price.",
@@ -323,12 +302,15 @@
                 footerBtnMessenger: "Message on Facebook",
                 footerPrivacy: "Privacy & Legal Information",
                 footerCopyright: "© 2025 Digifix BD. All Rights Reserved.",
-                modalTitle: "✨ AI Service Helper",
-                modalSubtitle: "Describe what you need in the box below. (Example: I need a Netflix account)",
-                modalPlaceholder: "Write your requirement here...",
-                modalBtnFind: "Find My Service",
+                chatHeader: "AI Assistant",
+                chatPlaceholder: "Type your message...",
+                chatInitialQuestion: "Hello! I am the Digifix BD AI assistant. What service are you looking for today?",
+                chatLiveAgentQuery: "Was this helpful? Would you like to talk to a live agent?",
+                chatYes: "Yes",
+                chatNo: "No",
+                chatContactInfo: "Great! You can contact us directly via:",
+                chatThanks: "You're welcome! Feel free to ask if you have any other questions.",
                 geminiError: "Something went wrong. Please try again later.",
-                geminiEmptyError: "Please write your requirement."
             },
             bn: {
                 pageTitle: "Digifix BD - মেটা ভেরিফাইড, সাবস্ক্রিপশন ও ডিজিটাল সার্ভিস",
@@ -340,9 +322,6 @@
                 heroSubtitle: "সুলভ মূল্য, দ্রুত ডেলিভারি। আপনার বিশ্বাস তৈরি করুন এবং ব্র্যান্ডকে এগিয়ে নিন!",
                 heroBtnWhatsapp: "WhatsApp-এ যোগাযোগ",
                 heroBtnMessenger: "মেসেজ পাঠান",
-                aiHelperTitle: "কোন সার্ভিসটি আপনার জন্য নিশ্চিত নন?",
-                aiHelperSubtitle: "আমাদের AI Helper-কে আপনার প্রয়োজন বলুন, এবং সে আপনাকে সঠিক সার্ভিসটি খুঁজে দিতে সাহায্য করবে।",
-                aiHelperBtn: "AI সার্ভিস হেল্পার চালু করুন",
                 onlineServicesTitle: "অনলাইন সার্ভিসসমূহ",
                 fbMetaVerified: "ফেসবুক মেটা ভেরিফাইড",
                 fbMetaVerifiedDesc: "সুলভ মূল্যে ব্লু ব্যাজ।",
@@ -398,12 +377,15 @@
                 footerBtnMessenger: "ফেসবুকে মেসেজ দিন",
                 footerPrivacy: "গোপনীয়তা ও আইনি তথ্য",
                 footerCopyright: "© ২০২৫ ডিজিফিক্স বিডি। সর্বস্বত্ব সংরক্ষিত।",
-                modalTitle: "✨ এআই সার্ভিস হেল্পার",
-                modalSubtitle: "আপনার কি দরকার, সেটা নিচের বক্সে বিস্তারিত লিখুন। (উদাহরণ: আমার নেটফ্লিক্স একাউন্ট লাগবে)",
-                modalPlaceholder: "এখানে আপনার প্রয়োজন লিখুন...",
-                modalBtnFind: "আমার সার্ভিস খুঁজুন",
+                chatHeader: "এআই অ্যাসিস্ট্যান্ট",
+                chatPlaceholder: "আপনার মেসেজ লিখুন...",
+                chatInitialQuestion: "হ্যালো! আমি ডিজিফিক্স বিডি-এর এআই অ্যাসিস্ট্যান্ট। আজ আপনি কোন সার্ভিসটি খুঁজছেন?",
+                chatLiveAgentQuery: "এই তথ্যটি কি আপনার জন্য সহায়ক ছিল? আপনি কি সরাসরি একজন লাইভ এজেন্টের সাথে কথা বলতে চান?",
+                chatYes: "হ্যাঁ",
+                chatNo: "না",
+                chatContactInfo: "চমৎকার! আপনি আমাদের সাথে সরাসরি যোগাযোগ করতে পারেন:",
+                chatThanks: "আপনাকে স্বাগতম! আপনার যদি অন্য কোনো প্রশ্ন থাকে, তবে জিজ্ঞাসা করতে পারেন।",
                 geminiError: "কোনো একটি সমস্যা হয়েছে। দয়া করে, কিছুক্ষণ পর আবার চেষ্টা করুন।",
-                geminiEmptyError: "দয়া করে, আপনার প্রয়োজন লিখুন।"
             }
         };
 
@@ -440,68 +422,121 @@
         document.addEventListener('DOMContentLoaded', () => {
             const savedLang = localStorage.getItem('language');
             const browserLang = navigator.language.split('-')[0];
-            
             const defaultLang = (browserLang === 'bn' && !savedLang) ? 'bn' : 'en';
-            
             const langToSet = savedLang || defaultLang;
             setLanguage(langToSet);
+            initializeChatbot();
         });
 
-        // --- AI HELPER MODAL & GEMINI API LOGIC ---
-        const aiHelperBtn = document.getElementById('ai-helper-btn');
-        const aiModal = document.getElementById('ai-modal');
-        const closeModalBtn = document.getElementById('close-modal-btn');
-        const findServiceBtn = document.getElementById('find-service-btn');
-        const userProblemTextarea = document.getElementById('user-problem');
-        const loader = document.getElementById('loader');
-        const aiResponseDiv = document.getElementById('ai-response');
+        // --- CHATBOT & GEMINI API LOGIC ---
+        const chatToggleBtn = document.getElementById('chat-toggle-btn');
+        const chatWindow = document.getElementById('chat-window');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const chatSendBtn = document.getElementById('chat-send-btn');
 
-        aiHelperBtn.addEventListener('click', () => aiModal.classList.add('active'));
-        
-        const closeModal = () => aiModal.classList.remove('active');
-        closeModalBtn.addEventListener('click', closeModal);
-        aiModal.addEventListener('click', (e) => {
-            if (e.target === aiModal) closeModal();
-        });
+        function initializeChatbot() {
+            chatToggleBtn.addEventListener('click', () => {
+                chatWindow.classList.toggle('active');
+                if (chatWindow.classList.contains('active') && chatMessages.children.length === 0) {
+                    const currentLang = localStorage.getItem('language') || 'en';
+                    addMessage(translations[currentLang].chatInitialQuestion, 'bot');
+                }
+            });
+        }
 
-        const allServices = `
-            Online Services: Facebook Meta Verified, Instagram + Threads Verified, Facebook Page Verification, Business Manager Verification, Ads Account Verification, WhatsApp Business Verification, Running Verification, Facebook Locked ID Unlock, Payout Transfer/Restriction/Disabled Fix, Payment Disabled Issue Fix (Ads Account / Meta Payment), Facebook Ads 15% VAT/TAX Saving BIN, Ads Campaign Setup & Boosting Service, Suspended ID Recovery.
-            Subscriptions: Netflix, Telegram, Twitter (X), Google AI Pro, ChatGPT Plus, YouTube Premium, Watch Time, VPN, Paid Software.
-            Other: RDP, Paid Tutorials, Mini Android app dev, WIFI BDIX Proxy.
-            Offline (Android): Dead Phone Repair, CPU Overclock, Root, OS Upgrade, Bootloop Fix, Boot animation Change, Lock Unlock, FRP bypass, Custom os install, Not supported app install, Software Flash, Delete system app, Custom kernel install, Windows/Linux/Mac os install.
-        `;
-
-        findServiceBtn.addEventListener('click', async () => {
-            const userQuery = userProblemTextarea.value;
-            const currentLang = localStorage.getItem('language') || 'en';
-
-            if (!userQuery.trim()) {
-                aiResponseDiv.textContent = translations[currentLang].geminiEmptyError;
-                aiResponseDiv.classList.remove('hidden');
-                return;
+        function addMessage(text, sender, isHTML = false) {
+            const messageContainer = document.createElement('div');
+            messageContainer.className = `chat-message ${sender}`;
+            const messageBubble = document.createElement('div');
+            messageBubble.className = 'message-bubble';
+            if (isHTML) {
+                messageBubble.innerHTML = text;
+            } else {
+                messageBubble.textContent = text;
             }
+            messageContainer.appendChild(messageBubble);
+            chatMessages.appendChild(messageContainer);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-message bot';
+            typingDiv.id = 'typing-indicator';
+            typingDiv.innerHTML = `<div class="message-bubble typing-indicator">...</div>`;
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
 
-            loader.classList.remove('hidden');
-            aiResponseDiv.classList.add('hidden');
-            findServiceBtn.disabled = true;
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typing-indicator');
+            if (indicator) indicator.remove();
+        }
 
-            const responseLanguage = currentLang === 'bn' ? 'Bangla (using the Latin alphabet, not Bengali script)' : 'English';
-            const greeting = currentLang === 'bn' ? 'Apnar proyojon onujayi,' : 'Based on your requirement,';
+        function handleAgentChoice(choice) {
+            const buttons = document.querySelectorAll('.chat-button');
+            buttons.forEach(button => {
+                button.disabled = true;
+                button.style.cursor = 'not-allowed';
+                button.style.backgroundColor = '#d1d5db';
+            });
+
+            const currentLang = localStorage.getItem('language') || 'en';
+            if (choice === 'yes') {
+                const contactText = translations[currentLang].chatContactInfo;
+                const whatsappBtnText = translations[currentLang].heroBtnWhatsapp;
+                const messengerBtnText = translations[currentLang].heroBtnMessenger;
+                const contactHtml = `
+                    ${contactText}<br><br>
+                    <a href="https://wa.me/16506687797" target="_blank" class="cta-button whatsapp-btn text-sm" style="text-decoration: none;">
+                        <i class="fab fa-whatsapp mr-2"></i> ${whatsappBtnText}
+                    </a>
+                    <a href="https://m.me/tanjim.ahmmed.shuvo" target="_blank" class="cta-button messenger-btn text-sm" style="text-decoration: none;">
+                        <i class="fab fa-facebook-messenger mr-2"></i> ${messengerBtnText}
+                    </a>
+                `;
+                addMessage(contactHtml, 'bot', true);
+            } else {
+                const thanksText = translations[currentLang].chatThanks;
+                addMessage(thanksText, 'bot');
+            }
+        }
+        
+        async function handleSendMessage() {
+            const userQuery = chatInput.value;
+            if (!userQuery.trim()) return;
+
+            addMessage(userQuery, 'user');
+            chatInput.value = '';
+            showTypingIndicator();
+            
+            const allServices = `
+                Online Services: Facebook Meta Verified, Instagram + Threads Verified, Facebook Page Verification, Business Manager Verification, Ads Account Verification, WhatsApp Business Verification, Running Verification, Facebook Locked ID Unlock, Payout Transfer/Restriction/Disabled Fix, Payment Disabled Issue Fix (Ads Account / Meta Payment), Facebook Ads 15% VAT/TAX Saving BIN, Ads Campaign Setup & Boosting Service, Suspended ID Recovery.
+                Subscriptions: Netflix, Telegram, Twitter (X), Google AI Pro, ChatGPT Plus, YouTube Premium, Watch Time, VPN, Paid Software.
+                Other: RDP, Paid Tutorials, Mini Android app dev, WIFI BDIX Proxy.
+                Offline (Android): Dead Phone Repair, CPU Overclock, Root, OS Upgrade, Bootloop Fix, Boot animation Change, Lock Unlock, FRP bypass, Custom os install, Not supported app install, Software Flash, Delete system app, Custom kernel install, Windows/Linux/Mac os install.
+            `;
 
             const prompt = `
-                You are a friendly and helpful assistant for 'Digifix BD'. 
-                A customer has described their need as: "${userQuery}".
-                Your task is to recommend the most relevant service(s) from the list below. 
-                1. Identify the best matching service(s).
-                2. Explain in simple terms why it's a good fit.
-                3. If no service matches, politely suggest they contact the owner directly.
-                
-                Respond in simple, helpful, and encouraging ${responseLanguage}.
+                You are a friendly and helpful assistant for 'Digifix BD'.
+                A user has sent a message: "${userQuery}".
 
+                FIRST, detect the language of the user's message. It will be one of three: English, Bangla (in Bengali script like 'আমার নেটফ্লিক্স লাগবে'), or Banglish (Bangla written in Latin script like 'amar netflix lagbe').
+
+                SECOND, based on the user's query, recommend the most relevant service(s) from the list below.
+                - If a service matches, explain why it's a good fit.
+                - If no service matches, politely say so and suggest they can still ask for it.
+
+                THIRD, and MOST IMPORTANTLY, you MUST write your entire response in the SAME language and script you detected.
+                - If the user wrote in English, respond in English.
+                - If the user wrote in বাংলা, respond in বাংলা.
+                - If the user wrote in Banglish, respond in Banglish.
+                
+                Do not add any introductory or concluding remarks that are not part of the direct answer. Just provide the service recommendation.
+                
                 Available services:
                 ${allServices}
-
-                Start your response with a friendly greeting like "${greeting}".
             `;
 
             try {
@@ -520,20 +555,40 @@
 
                 const result = await response.json();
                 
+                const currentLang = localStorage.getItem('language') || 'en';
                 let text = translations[currentLang].geminiError;
                 if (result.candidates && result.candidates[0]?.content?.parts?.[0]?.text) {
                     text = result.candidates[0].content.parts[0].text;
                 }
                 
-                aiResponseDiv.innerHTML = text.replace(/\n/g, '<br>');
+                removeTypingIndicator();
+                addMessage(text.replace(/\n/g, '<br>'), 'bot', true);
+                
+                setTimeout(() => {
+                    const liveAgentQuery = translations[currentLang].chatLiveAgentQuery;
+                    const yesText = translations[currentLang].chatYes;
+                    const noText = translations[currentLang].chatNo;
+
+                    const agentQueryHtml = `
+                        ${liveAgentQuery}<br>
+                        <button class="chat-button" onclick="handleAgentChoice('yes')">${yesText}</button>
+                        <button class="chat-button" onclick="handleAgentChoice('no')">${noText}</button>
+                    `;
+                    addMessage(agentQueryHtml, 'bot', true);
+                }, 1000);
 
             } catch (error) {
                 console.error("Gemini API Error:", error);
-                aiResponseDiv.textContent = translations[currentLang].geminiError;
-            } finally {
-                loader.classList.add('hidden');
-                aiResponseDiv.classList.remove('hidden');
-                findServiceBtn.disabled = false;
+                removeTypingIndicator();
+                const currentLang = localStorage.getItem('language') || 'en';
+                addMessage(translations[currentLang].geminiError, 'bot');
+            }
+        }
+
+        chatSendBtn.addEventListener('click', handleSendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleSendMessage();
             }
         });
     </script>
