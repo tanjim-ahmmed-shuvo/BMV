@@ -54,7 +54,7 @@
             <!-- Posts will be dynamically generated or placed here -->
             <!-- Post 1: Image -->
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300" data-post-id="post_1">
-                <img src="Post/its-my-photo1.jpg" alt="A picture of beautiful nature" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                <img src="Post/its-my-photo1.jpg" alt="The world in black and white" class="w-full h-100 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
                 <div class="p-5">
                     <p class="text-gray-700 dark:text-gray-300 mb-4">The world in black and white. A mood from 08.02.2021</p>
                     <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
@@ -87,9 +87,9 @@
             </div>
             <!-- Post 3: Image -->
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300" data-post-id="post_3">
-                <img src="post/its-my-photo2.jpg" alt="A picture of rural life" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                <img src="Post/its-my-photo2.jpg" alt="A post with a deep meaning" class="w-full h-100 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
                 <div class="p-5">
-                    <p class="text-gray-700 dark:text-gray-300 mb-4">🐰🍒𝐓𝐡𝐢𝐬 𝐚𝐛𝐮𝐭 𝐥𝐢𝐧𝐞🐰🍒<br>༊༎একটু আড়াল হলেই বোঝা যায় নিজের অস্তিত্ব অন্যের কাছে কতটা মূল্যহীনღ﹏🙂🦋</p>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4">🐰🍒𝐓𝐡𝐢𝐬 𝐚𝐛𝐮𝐭 𝐥�𝐧𝐞🐰🍒<br>༊༎একটু আড়াল হলেই বোঝা যায় নিজের অস্তিত্ব অন্যের কাছে কতটা মূল্যহীনღ﹏🙂🦋</p>
                     <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
                         <span class="view-count" id="views-post_3">👁️ Loading...</span>
                         <span>📅 Aug 03, 2021</span>
@@ -102,7 +102,7 @@
             </div>
             <!-- Post 4: Image -->
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300" data-post-id="post_4">
-                <img src="Post/its-my-photo3.jpg" alt="A selfie with a mirror" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                <img src="Post/its-my-photo3.jpg" alt="A selfie with a mirror" class="w-full h-100 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
                 <div class="p-5">
                     <p class="text-gray-700 dark:text-gray-300 mb-4">A selfie with mirror</p>
                     <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
@@ -189,7 +189,7 @@
                 if (!sessionStorage.getItem(viewIncrementedKey)) {
                     setDoc(docRef, { views: increment(1) }, { merge: true })
                         .then(() => sessionStorage.setItem(viewIncrementedKey, 'true'))
-                        .catch(error => console.error("Error incrementing view:", error));
+                        .catch(error => console.error(`Error incrementing view for ${postId}:`, error));
                 }
 
                 onSnapshot(docRef, (doc) => {
@@ -198,7 +198,7 @@
                         viewElement.innerText = doc.exists() ? `👁️ ${doc.data().views.toLocaleString()} Views` : `👁️ 1 View`;
                     }
                 }, (error) => {
-                    console.error("Error getting real-time views:", error);
+                    console.error(`Error getting real-time views for ${postId}:`, error);
                     const viewElement = document.getElementById(`views-${postId}`);
                     if(viewElement) viewElement.innerText = '👁️ Error';
                 });
@@ -212,7 +212,10 @@
 
         function openModalWithPost(postId) {
             const originalPost = document.querySelector(`[data-post-id='${postId}']`);
-            if (!originalPost) return;
+            if (!originalPost) {
+                console.error(`Post with ID ${postId} not found.`);
+                return;
+            }
 
             const postContentClone = originalPost.cloneNode(true);
             
@@ -302,3 +305,4 @@
 
 </body>
 </html>
+�
