@@ -7,12 +7,12 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Favicons -->
-    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="https://www.digifixbd.com/img/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://www.digifixbd.com/img/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="https://www.digifixbd.com/img/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.digifixbd.com/img/favicon/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Digifix BD" />
-    <link rel="manifest" href="/favicon/site.webmanifest" />
+    <link rel="manifest" href="https://www.digifixbd.com/img/favicon/site.webmanifest" />
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,16 +74,18 @@
     <!-- Main Content -->
     <main class="container mx-auto p-4 md:p-8">
         <div id="post-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            
             <!-- Post 1: Image -->
             <div class="post-card bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 cursor-pointer" 
                  data-post-id="post_1"
-                 data-author-name="Tanjim Ahmed Shuvo"
-                 data-author-img="https://placehold.co/50x50/2c3e50/ffffff?text=T"
+                 data-author-name="Digifix BD"
+                 data-author-img="https://www.digifixbd.com/img/favicon/web-app-manifest-512x512.png"
                  data-post-time="Aug 02, 2021"
                  data-caption="The world in black and white. A mood from 08.02.2021"
                  data-media-src="post/its-my-photo1.jpg"
                  data-media-type="image">
-                <img src="post/its-my-photo1.jpg" alt="The world in black and white" class="w-full h-100 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                
+                <img src="post/its-my-photo1.jpg" alt="The world in black and white" class="w-full h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
                 <div class="p-5">
                     <p class="text-gray-700 dark:text-gray-300 mb-4 truncate">The world in black and white. A mood from 08.02.2021</p>
                     <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
@@ -91,37 +93,104 @@
                         <span>📅 Aug 02, 2021</span>
                     </div>
                 </div>
+                <!-- Structured Data for Bots -->
+                <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "ImageObject",
+                  "contentUrl": "post/its-my-photo1.jpg",
+                  "name": "The world in black and white",
+                  "description": "The world in black and white. A mood from 08.02.2021",
+                  "datePublished": "2021-08-02",
+                  "author": {
+                    "@type": "Organization",
+                    "name": "Digifix BD",
+                    "url": "https://www.digifixbd.com"
+                  },
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "Digifix BD",
+                    "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://www.digifixbd.com/img/favicon/web-app-manifest-512x512.png"
+                    }
+                  },
+                  "copyrightHolder": "Digifix BD",
+                  "copyrightYear": "2021",
+                  "interactionStatistic": {
+                    "@type": "InteractionCounter",
+                    "interactionType": "https://schema.org/ViewAction",
+                    "userInteractionCount": 1500
+                  }
+                }
+                </script>
             </div>
+
             <!-- Post 2: Video -->
             <div class="post-card bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 cursor-pointer" 
                  data-post-id="post_2"
                  data-author-name="Digifix BD"
-                 data-author-img="https://placehold.co/50x50/e74c3c/ffffff?text=D"
+                 data-author-img="https://www.digifixbd.com/img/favicon/web-app-manifest-512x512.png"
                  data-post-time="Jan 04, 2022"
                  data-caption="A video of a typical day on a busy city street. Life is always on the move here."
                  data-media-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
                  data-media-type="video">
-                <video class="w-full h-56 object-cover pointer-events-none" poster="https://placehold.co/600x400/e74c3c/ffffff?text=Watch+Video">
+                
+                <video class="w-full h-64 object-cover pointer-events-none" poster="https://placehold.co/600x400/e74c3c/ffffff?text=Watch+Video">
                     <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
                 </video>
                 <div class="p-5">
-                    <p class="text-gray-700 dark:text-gray-300 mb-4 truncate">A video of a typical day on a busy city street. Life is always on the move here.</p>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4 truncate">A video of a typical day on a busy city street.</p>
                     <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
                         <span class="view-count" id="views-post_2">👁️ 2.8k Views</span>
                         <span>📅 Jan 04, 2022</span>
                     </div>
                 </div>
+                 <!-- Structured Data for Bots -->
+                <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "VideoObject",
+                  "contentUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+                  "name": "Busy City Street",
+                  "description": "A video of a typical day on a busy city street. Life is always on the move here.",
+                  "uploadDate": "2022-01-04",
+                  "thumbnailUrl": "https://placehold.co/600x400/e74c3c/ffffff?text=Watch+Video",
+                  "author": {
+                    "@type": "Organization",
+                    "name": "Digifix BD",
+                    "url": "https://www.digifixbd.com"
+                  },
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "Digifix BD",
+                    "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://www.digifixbd.com/img/favicon/web-app-manifest-512x512.png"
+                    }
+                  },
+                  "copyrightHolder": "Digifix BD",
+                  "copyrightYear": "2022",
+                  "interactionStatistic": {
+                    "@type": "InteractionCounter",
+                    "interactionType": "https://schema.org/ViewAction",
+                    "userInteractionCount": 2800
+                  }
+                }
+                </script>
             </div>
+
             <!-- Post 3: Image -->
             <div class="post-card bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 cursor-pointer" 
                  data-post-id="post_3"
-                 data-author-name="Nargis Akther"
-                 data-author-img="https://placehold.co/50x50/9b59b6/ffffff?text=N"
+                 data-author-name="Digifix BD"
+                 data-author-img="https://www.digifixbd.com/img/favicon/web-app-manifest-512x512.png"
                  data-post-time="Aug 03, 2021"
                  data-caption="🐰🍒𝐓𝐡𝐢𝐬 𝐚𝐛𝐮𝐭 𝐥𝐢𝐧𝐞🐰🍒<br>༊༎একটু আড়াল হলেই বোঝা যায় নিজের অস্তিত্ব অন্যের কাছে কতটা মূল্যহীনღ﹏🙂🦋"
                  data-media-src="post/its-my-photo2.jpg"
                  data-media-type="image">
-                <img src="post/its-my-photo2.jpg" alt="A post with a deep meaning" class="w-full h-100 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                
+                <img src="post/its-my-photo2.jpg" alt="A post with a deep meaning" class="w-full h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
                 <div class="p-5">
                     <p class="text-gray-700 dark:text-gray-300 mb-4 truncate">🐰🍒𝐓𝐡𝐢𝐬 𝐚𝐛𝐮𝐭 𝐥𝐢𝐧𝐞🐰🍒</p>
                     <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
@@ -129,17 +198,50 @@
                         <span>📅 Aug 03, 2021</span>
                     </div>
                 </div>
+                 <!-- Structured Data for Bots -->
+                <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "ImageObject",
+                  "contentUrl": "post/its-my-photo2.jpg",
+                  "name": "This abut line",
+                  "description": "🐰🍒𝐓𝐡𝐢𝐬 𝐚𝐛𝐮𝐭 𝐥𝐢𝐧𝐞🐰🍒<br>༊༎একটু আড়াল হলেই বোঝা যায় নিজের অস্তিত্ব অন্যের কাছে কতটা মূল্যহীনღ﹏🙂🦋",
+                  "datePublished": "2021-08-03",
+                  "author": {
+                    "@type": "Organization",
+                    "name": "Digifix BD",
+                    "url": "https://www.digifixbd.com"
+                  },
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "Digifix BD",
+                    "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://www.digifixbd.com/img/favicon/web-app-manifest-512x512.png"
+                    }
+                  },
+                  "copyrightHolder": "Digifix BD",
+                  "copyrightYear": "2021",
+                  "interactionStatistic": {
+                    "@type": "InteractionCounter",
+                    "interactionType": "https://schema.org/ViewAction",
+                    "userInteractionCount": 990
+                  }
+                }
+                </script>
             </div>
+
             <!-- Post 4: Image -->
             <div class="post-card bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 cursor-pointer" 
                  data-post-id="post_4"
-                 data-author-name="Tanjim Ahmed Shuvo"
-                 data-author-img="https://placehold.co/50x50/1abc9c/ffffff?text=T"
+                 data-author-name="Digifix BD"
+                 data-author-img="https://www.digifixbd.com/img/favicon/web-app-manifest-512x512.png"
                  data-post-time="Aug 10, 2021"
                  data-caption="A selfie with mirror"
                  data-media-src="post/its-my-photo3.jpg"
                  data-media-type="image">
-                <img src="post/its-my-photo3.jpg" alt="A selfie with a mirror" class="w-full h-100 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+                
+                <img src="post/its-my-photo3.jpg" alt="A selfie with a mirror" class="w-full h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
                 <div class="p-5">
                     <p class="text-gray-700 dark:text-gray-300 mb-4 truncate">A selfie with mirror</p>
                     <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
@@ -147,6 +249,37 @@
                         <span>📅 Aug 10, 2021</span>
                     </div>
                 </div>
+                <!-- Structured Data for Bots -->
+                <script type="application/ld+json">
+                {
+                  "@context": "https://schema.org",
+                  "@type": "ImageObject",
+                  "contentUrl": "post/its-my-photo3.jpg",
+                  "name": "A selfie with mirror",
+                  "description": "A selfie with mirror",
+                  "datePublished": "2021-08-10",
+                  "author": {
+                    "@type": "Organization",
+                    "name": "Digifix BD",
+                    "url": "https://www.digifixbd.com"
+                  },
+                  "publisher": {
+                    "@type": "Organization",
+                    "name": "Digifix BD",
+                    "logo": {
+                      "@type": "ImageObject",
+                      "url": "https://www.digifixbd.com/img/favicon/web-app-manifest-512x512.png"
+                    }
+                  },
+                  "copyrightHolder": "Digifix BD",
+                  "copyrightYear": "2021",
+                  "interactionStatistic": {
+                    "@type": "InteractionCounter",
+                    "interactionType": "https://schema.org/ViewAction",
+                    "userInteractionCount": 3200
+                  }
+                }
+                </script>
             </div>
         </div>
     </main>
@@ -165,7 +298,7 @@
     <div id="post-modal" class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center hidden p-4">
         <div id="modal-content-container" class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-4xl flex flex-col md:flex-row max-h-[95vh]">
             <!-- Media container -->
-            <div id="modal-media-container" class="w-full md:w-3/5 bg-black flex justify-center items-center">
+            <div id="modal-media-container" class="w-full md:w-3/5 bg-black flex justify-center items-center rounded-l-lg">
                 <!-- Media (img/video) will be injected here -->
             </div>
             <!-- Details container -->
@@ -187,6 +320,10 @@
                 </div>
                 <!-- Caption -->
                 <div id="modal-caption" class="flex-grow py-4 overflow-y-auto text-gray-700 dark:text-gray-300"></div>
+                
+                <!-- Copyright Notice -->
+                <div id="modal-copyright" class="text-xs text-gray-400 dark:text-gray-500 py-2"></div>
+
                 <!-- Actions -->
                 <div class="border-t border-gray-200 dark:border-gray-700 pt-2">
                     <div id="modal-view-count" class="text-sm text-gray-500 mb-2"></div>
@@ -215,6 +352,7 @@
         const modalPostTime = document.getElementById('modal-post-time');
         const modalCaption = document.getElementById('modal-caption');
         const modalViewCount = document.getElementById('modal-view-count');
+        const modalCopyright = document.getElementById('modal-copyright');
         const modalShareBtn = document.getElementById('modal-share-btn');
         const closeModalBtn = document.getElementById('modal-close-btn');
 
@@ -236,13 +374,17 @@
             modalCaption.innerHTML = dataset.caption;
             modalViewCount.textContent = viewCountElement ? viewCountElement.textContent : 'N/A';
             
+            // Add copyright info
+            const postYear = new Date(dataset.postTime).getFullYear();
+            modalCopyright.textContent = `© ${postYear} ${dataset.authorName}. All Rights Reserved.`;
+
             // Create and append media element
             modalMediaContainer.innerHTML = ''; // Clear previous media
             if (dataset.mediaType === 'image') {
                 const img = document.createElement('img');
                 img.src = dataset.mediaSrc;
                 img.className = 'max-h-[90vh] max-w-full object-contain';
-                img.onerror = () => img.src = 'https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';
+                img.onerror = () => img.src = 'https://placehold.co/800x600/111111/ffffff?text=Image+Not+Found';
                 modalMediaContainer.appendChild(img);
             } else if (dataset.mediaType === 'video') {
                 const video = document.createElement('video');
@@ -250,6 +392,7 @@
                 video.className = 'max-h-[90vh] max-w-full';
                 video.controls = true;
                 video.autoplay = true;
+                video.loop = true;
                 modalMediaContainer.appendChild(video);
             }
             
@@ -281,24 +424,35 @@
 
         closeModalBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => {
+            // Close modal if the outer dark area is clicked
             if (e.target.id === 'post-modal') {
                 closeModal();
             }
         });
+        
+        // Add keyboard support to close modal
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
 
-        // Handle opening post from URL hash
+        // Handle opening post from URL hash on page load
         function handleSharedPost() {
             const hash = window.location.hash;
             if (hash) {
                 const postId = hash.substring(1);
                 const postElement = document.querySelector(`[data-post-id='${postId}']`);
                 if (postElement) {
+                    // Use a small timeout to ensure the page is fully rendered
                     setTimeout(() => openModalWithPost(postElement), 300);
                 }
             }
         }
         
         window.addEventListener('load', handleSharedPost);
+        // Also handle back/forward navigation
+        window.addEventListener('popstate', handleSharedPost);
 
     </script>
     
@@ -311,7 +465,8 @@
                 try {
                     await navigator.share({ title, text, url });
                 } catch (err) {
-                    console.error('Error sharing post: ', err);
+                    // User might have cancelled the share action, so no need for an error message.
+                    console.error('Share API error: ', err);
                 }
             } else {
                 copyToClipboard(url);
@@ -321,6 +476,10 @@
         function copyToClipboard(text) {
             const textArea = document.createElement('textarea');
             textArea.value = text;
+            // Make the textarea non-editable and invisible
+            textArea.style.position = 'fixed';
+            textArea.style.top = '-9999px';
+            textArea.style.left = '-9999px';
             document.body.appendChild(textArea);
             textArea.select();
             try {
@@ -328,7 +487,7 @@
                 showNotification('Link copied to clipboard!');
             } catch (err) {
                 console.error('Failed to copy link: ', err);
-                alert('Sorry, the link could not be copied.');
+                showNotification('Error: Could not copy link.');
             }
             document.body.removeChild(textArea);
         }
