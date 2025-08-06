@@ -24,9 +24,32 @@
         video::-webkit-media-controls-panel {
             background-color: rgba(0, 0, 0, 0.5);
         }
-        /* Style for the modal to ensure it appears on top */
         #post-modal {
             z-index: 100;
+        }
+        /* Styling for action buttons in modal */
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #374151; /* text-gray-700 */
+            font-weight: 500;
+            transition: background-color 0.2s;
+            width: 100%;
+        }
+        .action-btn:hover {
+            background-color: #e5e7eb; /* bg-gray-200 */
+        }
+        .dark .action-btn {
+            background-color: #374151; /* dark:bg-gray-700 */
+            color: #d1d5db; /* dark:text-gray-300 */
+        }
+        .dark .action-btn:hover {
+            background-color: #4b5563; /* dark:bg-gray-600 */
         }
     </style>
 </head>
@@ -51,68 +74,78 @@
     <!-- Main Content -->
     <main class="container mx-auto p-4 md:p-8">
         <div id="post-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            <!-- Posts will be dynamically generated or placed here -->
             <!-- Post 1: Image -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300" data-post-id="post_1">
-                <img src="post/its-my-photo1.jpg" alt="The world in black and white" class="w-full h-100 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+            <div class="post-card bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 cursor-pointer" 
+                 data-post-id="post_1"
+                 data-author-name="Digifix BD"
+                 data-author-img="https://placehold.co/50x50/2c3e50/ffffff?text=T"
+                 data-post-time="Aug 02, 2021"
+                 data-caption="The world in black and white. A mood from 08.02.2021"
+                 data-media-src="post/its-my-photo1.jpg"
+                 data-media-type="image">
+                <img src="https://www.digifixbd.com/post/its-my-photo1.jpg" alt="The world in black and white" class="w-full h-100 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
                 <div class="p-5">
-                    <p class="text-gray-700 dark:text-gray-300 mb-4">The world in black and white. A mood from 08.02.2021</p>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4 truncate">The world in black and white. A mood from 08.02.2021</p>
                     <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
-                        <span>👁️ 1.5k Views</span>
+                        <span class="view-count" id="views-post_1">👁️ 1.5k Views</span>
                         <span>📅 Aug 02, 2021</span>
                     </div>
-                    <button onclick="sharePost('post_1', 'Black and White', 'The world in black and white.')" class="mt-4 w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16"><path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/></svg>
-                        Share
-                    </button>
                 </div>
             </div>
             <!-- Post 2: Video -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300" data-post-id="post_2">
-                <video class="w-full h-56 object-cover" controls poster="https://placehold.co/600x400/e74c3c/ffffff?text=Watch+Video">
+            <div class="post-card bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 cursor-pointer" 
+                 data-post-id="post_2"
+                 data-author-name="Digifix BD"
+                 data-author-img="https://placehold.co/50x50/e74c3c/ffffff?text=D"
+                 data-post-time="Jan 04, 2022"
+                 data-caption="A video of a typical day on a busy city street. Life is always on the move here."
+                 data-media-src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+                 data-media-type="video">
+                <video class="w-full h-56 object-cover pointer-events-none" poster="https://placehold.co/600x400/e74c3c/ffffff?text=Watch+Video">
                     <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
                 </video>
                 <div class="p-5">
-                    <p class="text-gray-700 dark:text-gray-300 mb-4">A video of a typical day on a busy city street. Life is always on the move here.</p>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4 truncate">A video of a typical day on a busy city street. Life is always on the move here.</p>
                     <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
-                        <span>👁️ 2.8k Views</span>
+                        <span class="view-count" id="views-post_2">👁️ 2.8k Views</span>
                         <span>📅 Jan 04, 2022</span>
                     </div>
-                    <button onclick="sharePost('post_2', 'City Life Video', 'A video of a typical day on a busy city street.')" class="mt-4 w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16"><path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/></svg>
-                        Share
-                    </button>
                 </div>
             </div>
             <!-- Post 3: Image -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300" data-post-id="post_3">
-                <img src="post/its-my-photo2.jpg" alt="A post with a deep meaning" class="w-full h-100 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+            <div class="post-card bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 cursor-pointer" 
+                 data-post-id="post_3"
+                 data-author-name="Digifix BD"
+                 data-author-img="https://placehold.co/50x50/9b59b6/ffffff?text=N"
+                 data-post-time="Aug 03, 2021"
+                 data-caption="🐰🍒𝐓𝐡𝐢𝐬 𝐚𝐛𝐮𝐭 𝐥𝐢𝐧𝐞🐰🍒<br>༊༎একটু আড়াল হলেই বোঝা যায় নিজের অস্তিত্ব অন্যের কাছে কতটা মূল্যহীনღ﹏🙂🦋"
+                 data-media-src="post/its-my-photo2.jpg"
+                 data-media-type="image">
+                <img src="https://www.digifixbd.com/post/its-my-photo2.jpg" alt="A post with a deep meaning" class="w-full h-100 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
                 <div class="p-5">
-                    <p class="text-gray-700 dark:text-gray-300 mb-4">🐰🍒𝐓𝐡𝐢𝐬 𝐚𝐛𝐮𝐭 𝐥𝐢𝐧𝐞�🍒<br>༊༎একটু আড়াল হলেই বোঝা যায় নিজের অস্তিত্ব অন্যের কাছে কতটা মূল্যহীনღ﹏🙂🦋</p>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4 truncate">🐰🍒𝐓𝐡𝐢𝐬 𝐚𝐛𝐮𝐭 𝐥𝐢𝐧𝐞🐰🍒</p>
                     <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
-                        <span>👁️ 990 Views</span>
+                        <span class="view-count" id="views-post_3">👁️ 990 Views</span>
                         <span>📅 Aug 03, 2021</span>
                     </div>
-                    <button onclick="sharePost('post_3', 'Aesthetic Post', 'A post with a deep meaning.')" class="mt-4 w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16"><path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/></svg>
-                        Share
-                    </button>
                 </div>
             </div>
             <!-- Post 4: Image -->
-            <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300" data-post-id="post_4">
-                <img src="post/its-my-photo3.jpg" alt="A selfie with a mirror" class="w-full h-100 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
+            <div class="post-card bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 duration-300 cursor-pointer" 
+                 data-post-id="post_4"
+                 data-author-name="Digifix BD"
+                 data-author-img="https://placehold.co/50x50/1abc9c/ffffff?text=T"
+                 data-post-time="Aug 10, 2021"
+                 data-caption="A selfie with mirror"
+                 data-media-src="post/its-my-photo3.jpg"
+                 data-media-type="image">
+                <img src="https://www.digifixbd.com/post/its-my-photo3.jpg" alt="A selfie with a mirror" class="w-full h-100 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';">
                 <div class="p-5">
-                    <p class="text-gray-700 dark:text-gray-300 mb-4">A selfie with mirror</p>
+                    <p class="text-gray-700 dark:text-gray-300 mb-4 truncate">A selfie with mirror</p>
                     <div class="flex justify-between items-center text-sm text-gray-500 dark:text-gray-400">
-                        <span>👁️ 3.2k Views</span>
+                        <span class="view-count" id="views-post_4">👁️ 3.2k Views</span>
                         <span>📅 Aug 10, 2021</span>
                     </div>
-                    <button onclick="sharePost('post_4', 'Mirror Selfie', 'A selfie with a mirror.')" class="mt-4 w-full bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share-fill" viewBox="0 0 16 16"><path d="M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5z"/></svg>
-                        Share
-                    </button>
                 </div>
             </div>
         </div>
@@ -128,137 +161,139 @@
         Link copied to clipboard!
     </div>
 
-    <!-- Modal for displaying a single post -->
-    <div id="post-modal" class="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center hidden">
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden max-w-lg w-full m-4 relative">
-            <!-- Close Button -->
-            <button id="modal-close-btn" class="absolute top-3 right-3 text-white bg-black bg-opacity-50 rounded-full p-1 hover:bg-opacity-75 transition z-10">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-                </svg>
-            </button>
-            
-            <!-- Modal Content Area -->
-            <div id="modal-content-area" class="max-h-[90vh] overflow-y-auto">
-                <!-- Content will be injected here by JavaScript -->
+    <!-- New Facebook-style Modal -->
+    <div id="post-modal" class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center hidden p-4">
+        <div id="modal-content-container" class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-4xl flex flex-col md:flex-row max-h-[95vh]">
+            <!-- Media container -->
+            <div id="modal-media-container" class="w-full md:w-3/5 bg-black flex justify-center items-center">
+                <!-- Media (img/video) will be injected here -->
+            </div>
+            <!-- Details container -->
+            <div class="w-full md:w-2/5 flex flex-col p-4">
+                <!-- Header -->
+                <div class="flex justify-between items-start border-b border-gray-200 dark:border-gray-700 pb-3">
+                    <div class="flex items-center gap-3">
+                        <img id="modal-author-img" src="" alt="Author" class="h-10 w-10 rounded-full object-cover">
+                        <div>
+                            <p id="modal-author-name" class="font-bold text-gray-800 dark:text-white"></p>
+                            <p id="modal-post-time" class="text-xs text-gray-500"></p>
+                        </div>
+                    </div>
+                    <button id="modal-close-btn" class="text-gray-500 hover:text-gray-800 dark:hover:text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </button>
+                </div>
+                <!-- Caption -->
+                <div id="modal-caption" class="flex-grow py-4 overflow-y-auto text-gray-700 dark:text-gray-300"></div>
+                <!-- Actions -->
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-2">
+                    <div id="modal-view-count" class="text-sm text-gray-500 mb-2"></div>
+                    <div>
+                        <button id="modal-share-btn" class="action-btn">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6.002l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.368a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path></svg>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- Firebase SDK and Scripts -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, setDoc, increment } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        // NOTE: Firebase SDK is not included in this static example.
+        // The view count is hardcoded for demonstration.
+        // In a real application, you would initialize Firebase here.
 
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let db, auth;
-
-        async function main() {
-            try {
-                const app = initializeApp(firebaseConfig);
-                db = getFirestore(app);
-                auth = getAuth(app);
-
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-                console.log("Firebase initialized and user signed in.");
-
-                // This function will now only work if you add back the 'view-count' class to the spans
-                initializePostViews(); 
-                handleSharedPost(); // Check for shared links on load
-            } catch (error) {
-                console.error("Firebase initialization failed:", error);
-            }
-        }
-
-        function initializePostViews() {
-            const posts = document.querySelectorAll('.view-count[data-post-id]');
-            posts.forEach(post => {
-                const postId = post.dataset.postId;
-                if (!postId) return;
-                const docRef = doc(db, `artifacts/${appId}/public/data/posts/${postId}`);
-                const viewIncrementedKey = `view_incremented_${postId}`;
-
-                if (!sessionStorage.getItem(viewIncrementedKey)) {
-                    setDoc(docRef, { views: increment(1) }, { merge: true })
-                        .then(() => sessionStorage.setItem(viewIncrementedKey, 'true'))
-                        .catch(error => console.error(`Error incrementing view for ${postId}:`, error));
-                }
-
-                onSnapshot(docRef, (doc) => {
-                    const viewElement = document.getElementById(`views-${postId}`);
-                    if (viewElement) {
-                        viewElement.innerText = doc.exists() ? `👁️ ${doc.data().views.toLocaleString()} Views` : `👁️ 1 View`;
-                    }
-                }, (error) => {
-                    console.error(`Error getting real-time views for ${postId}:`, error);
-                    const viewElement = document.getElementById(`views-${postId}`);
-                    if(viewElement) viewElement.innerText = '👁️ Error';
-                });
-            });
-        }
-
-        // --- MODAL LOGIC ---
+        // --- MODAL AND EVENT LISTENER LOGIC ---
         const modal = document.getElementById('post-modal');
-        const modalContentArea = document.getElementById('modal-content-area');
+        const modalMediaContainer = document.getElementById('modal-media-container');
+        const modalAuthorImg = document.getElementById('modal-author-img');
+        const modalAuthorName = document.getElementById('modal-author-name');
+        const modalPostTime = document.getElementById('modal-post-time');
+        const modalCaption = document.getElementById('modal-caption');
+        const modalViewCount = document.getElementById('modal-view-count');
+        const modalShareBtn = document.getElementById('modal-share-btn');
         const closeModalBtn = document.getElementById('modal-close-btn');
 
-        function openModalWithPost(postId) {
-            const originalPost = document.querySelector(`[data-post-id='${postId}']`);
-            if (!originalPost) {
-                console.error(`Post with ID ${postId} not found.`);
-                return;
-            }
+        function openModalWithPost(postElement) {
+            if (!postElement) return;
 
-            const postContentClone = originalPost.cloneNode(true);
-            
-            const shareButtonInModal = postContentClone.querySelector('button');
-            if(shareButtonInModal) shareButtonInModal.remove();
+            const dataset = postElement.dataset;
+            const viewCountElement = postElement.querySelector('.view-count');
 
-            const mediaElement = postContentClone.querySelector('img, video');
-            if (mediaElement) {
-                mediaElement.classList.remove('h-56');
-                mediaElement.classList.add('w-full', 'max-h-[70vh]', 'object-contain');
+            // Populate modal with data
+            modalAuthorImg.src = dataset.authorImg;
+            modalAuthorName.textContent = dataset.authorName;
+            modalPostTime.textContent = dataset.postTime;
+            modalCaption.innerHTML = dataset.caption;
+            modalViewCount.textContent = viewCountElement ? viewCountElement.textContent : 'N/A';
+            
+            // Create and append media element
+            modalMediaContainer.innerHTML = ''; // Clear previous media
+            if (dataset.mediaType === 'image') {
+                const img = document.createElement('img');
+                img.src = dataset.mediaSrc;
+                img.className = 'max-h-[90vh] max-w-full object-contain';
+                img.onerror = () => img.src = 'https://placehold.co/600x400/cccccc/ffffff?text=Image+Not+Found';
+                modalMediaContainer.appendChild(img);
+            } else if (dataset.mediaType === 'video') {
+                const video = document.createElement('video');
+                video.src = dataset.mediaSrc;
+                video.className = 'max-h-[90vh] max-w-full';
+                video.controls = true;
+                video.autoplay = true;
+                modalMediaContainer.appendChild(video);
             }
             
-            modalContentArea.innerHTML = '';
-            modalContentArea.appendChild(postContentClone);
+            // Set up share button
+            modalShareBtn.onclick = () => sharePost(dataset.postId, dataset.authorName + "'s Post", dataset.caption);
+
+            // Show modal
             modal.classList.remove('hidden');
         }
 
         function closeModal() {
             modal.classList.add('hidden');
-            modalContentArea.innerHTML = '';
+            // Stop video playback when closing
+            const video = modalMediaContainer.querySelector('video');
+            if (video) {
+                video.pause();
+                video.src = "";
+            }
             if (history.pushState) {
                 history.pushState("", document.title, window.location.pathname + window.location.search);
-            } else {
-                window.location.hash = '';
             }
         }
 
+        // Event Listeners
+        document.querySelectorAll('.post-card').forEach(card => {
+            card.addEventListener('click', () => openModalWithPost(card));
+        });
+
         closeModalBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
+            if (e.target.id === 'post-modal') {
                 closeModal();
             }
         });
 
+        // Handle opening post from URL hash
         function handleSharedPost() {
             const hash = window.location.hash;
             if (hash) {
                 const postId = hash.substring(1);
-                setTimeout(() => openModalWithPost(postId), 500);
+                const postElement = document.querySelector(`[data-post-id='${postId}']`);
+                if (postElement) {
+                    setTimeout(() => openModalWithPost(postElement), 300);
+                }
             }
         }
+        
+        window.addEventListener('load', handleSharedPost);
 
-        window.addEventListener('load', main);
     </script>
     
     <script>
@@ -305,4 +340,3 @@
 
 </body>
 </html>
-�
