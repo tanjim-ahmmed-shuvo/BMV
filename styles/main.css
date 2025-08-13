@@ -1,5 +1,8 @@
 body { font-family: 'Inter', sans-serif; }
-.hero-gradient { background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC); }
+.hero-gradient {
+    /* Softer pastel gradient for the hero section */
+    background: linear-gradient(135deg, #6699cc, #90b3f3, #aed8fc);
+}
 .section-title { font-weight: 900; font-size: 2.5rem; text-align: center; margin-bottom: 3rem; color: #1a202c; }
 .service-card {
     background-color: white; border-radius: 12px; padding: 2rem 1.5rem;
@@ -64,3 +67,125 @@ body { font-family: 'Inter', sans-serif; }
     margin: 0.25rem; cursor: pointer;
 }
 .chat-button:hover { background-color: #d1d5db; }
+
+/* ==========================================================================
+   Liquid Glass Effect
+   This section adds an animated, colorful background behind the entire page
+   and applies a frosted glass feel to cards and key sections.
+
+   The .liquid-bg element contains multiple circular spans that float slowly
+   across the screen. Each circle uses a large blur and semi‑transparent colors
+   to create a smooth, liquid effect. The header, service cards, and footer
+   get transparent backgrounds and backdrop filters so the moving colors show
+   through with a glassy distortion.
+========================================================================== */
+
+/* Container covering the full viewport for the animated blobs. */
+.liquid-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Each span inside .liquid-bg becomes a blurred, colored blob.
+   Adjust the width/height to change their size. */
+.liquid-bg span {
+    position: absolute;
+    display: block;
+    /* Increase blob size and blur and reduce opacity for a barely‑there effect */
+    width: 50vmax;
+    height: 50vmax;
+    border-radius: 50%;
+    filter: blur(250px);
+    opacity: 0.2;
+    /* Slow the animation further so motion is extremely subtle */
+    animation: liquidMove 120s ease-in-out infinite alternate;
+}
+
+/* Individual blob colors, positions and animation speeds.
+   You can add or remove spans in the HTML to vary the effect. */
+.liquid-bg span:nth-child(1) {
+    background: rgba(255, 255, 255, 0.25);
+    top: -10%;
+    left: -20%;
+    animation-duration: 140s;
+}
+
+.liquid-bg span:nth-child(2) {
+    background: rgba(240, 248, 255, 0.25);
+    top: 20%;
+    left: 60%;
+    animation-duration: 130s;
+}
+
+.liquid-bg span:nth-child(3) {
+    background: rgba(245, 240, 255, 0.25);
+    top: 55%;
+    left: -20%;
+    animation-duration: 150s;
+}
+
+.liquid-bg span:nth-child(4) {
+    background: rgba(240, 255, 240, 0.25);
+    top: 65%;
+    left: 55%;
+    animation-duration: 135s;
+}
+
+/* Keyframes that smoothly move each blob around in an organic pattern. */
+@keyframes liquidMove {
+    0% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        /* Reduce translation distance and scaling even further for eye‑friendly motion */
+        transform: translate(5%, -2%) scale(1.05);
+    }
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+}
+
+/* Apply a glassy, semi‑transparent look to the header so the blobs subtly
+   show through behind it. Target the specific bg‑white utility class to
+   override Tailwind’s white background */
+header {
+    /* Semi‑transparent header letting the blobs shimmer through while retaining readability */
+    background: rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Convert service cards into frosted glass panels. */
+.service-card {
+    background: rgba(255, 255, 255, 0.35) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px) saturate(150%);
+    -webkit-backdrop-filter: blur(10px) saturate(150%);
+}
+
+/* Slightly darken the footer background and add a blur so blobs shine through. */
+footer {
+    background: rgba(255, 255, 255, 0.2) !important;
+    backdrop-filter: blur(10px) saturate(120%);
+    -webkit-backdrop-filter: blur(10px) saturate(120%);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    /* Use a dark font color for contrast against the light frosted backdrop */
+    color: #1f2937;
+}
+
+/* Ensure footer links remain legible against the lighter background */
+footer a {
+    color: #1f2937;
+}
+
+/* Override Tailwind text utility classes inside the footer so the text remains dark */
+footer h3, footer p {
+    color: #1f2937 !important;
+}
