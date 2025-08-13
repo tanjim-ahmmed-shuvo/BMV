@@ -1,7 +1,7 @@
 body { font-family: 'Inter', sans-serif; }
 .hero-gradient {
     /* Softer pastel gradient for the hero section */
-    background: linear-gradient(135deg, #6699cc, #90b3f3, #aed8fc);
+    background: linear-gradient(135deg, #000000, #a37e2c, #d4af37, #f8e5b9);
 }
 .section-title { font-weight: 900; font-size: 2.5rem; text-align: center; margin-bottom: 3rem; color: #1a202c; }
 .service-card {
