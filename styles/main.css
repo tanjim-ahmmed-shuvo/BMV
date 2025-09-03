@@ -1,30 +1,227 @@
-body { font-family: 'Inter', sans-serif; }
-.hero-gradient {
-    /* Softer pastel gradient for the hero section */
-    background: linear-gradient(135deg, #000000, #a37e2c, #d4af37, #f8e5b9);
+html {
+    scroll-behavior: smooth;
 }
+body { 
+    font-family: 'Inter', sans-serif; 
+    background-color: #f8f9fa; /* A very light gray for a clean look */
+}
+
+/* ==========================================================================
+   Hero Section - Animated Mesh Gradient
+========================================================================== */
+.hero-gradient {
+    position: relative;
+    background-color: #667eea; /* Fallback color */
+}
+.hero-gradient::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(315deg, #7f53ac, #647dee, #3b82f6, #80d0c7);
+    background-size: 400% 400%;
+    animation: animated-gradient 18s ease infinite;
+    z-index: 1;
+}
+#hero-section .container {
+    position: relative;
+    z-index: 2;
+}
+@keyframes animated-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ==========================================================================
+   Staggered Fade-in Animation for Hero
+========================================================================== */
+.fade-in-up {
+    animation: fadeInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* ==========================================================================
+   Header and Navigation
+========================================================================== */
+header {
+    background: rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(2px) saturate(120%);
+    -webkit-backdrop-filter: blur(2px) saturate(120%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+header.scrolled {
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+header nav {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    transition: padding 0.3s ease-out;
+}
+header.scrolled nav {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+/*
+ * Active navigation link styling
+ * When a nav link corresponds to the section currently in view,
+ * highlight it to improve user orientation. The underline indicator helps
+ * users see which section is active at a glance.
+ */
+header nav a.active {
+    color: #0052D4 !important;
+    font-weight: 600;
+    position: relative;
+}
+header nav a.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: #0052D4;
+}
+
+
+/* ==========================================================================
+   General Styles & Cards
+========================================================================== */
 .section-title { font-weight: 900; font-size: 2.5rem; text-align: center; margin-bottom: 3rem; color: #1a202c; }
+
 .service-card {
     background-color: white; border-radius: 12px; padding: 2rem 1.5rem;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; height: 100%;
+    box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.07), 0 2px 6px -2px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; height: 100%;
     display: flex; flex-direction: column; align-items: center; justify-content: flex-start; text-align: center;
 }
-.service-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); }
+.service-card:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); 
+}
+
+/* Enhance service card hover: change heading and icon color for better feedback */
+.service-card:hover h4 {
+    color: #0052D4;
+}
+.service-card:hover .icon {
+    color: #0052D4;
+}
 .service-card .icon { font-size: 2.5rem; margin-bottom: 1rem; color: #4364F7; }
+
+
+/* ==========================================================================
+   CTA Buttons
+========================================================================== */
 .cta-button {
     display: inline-flex; align-items: center; justify-content: center; padding: 0.75rem 1.5rem;
     border-radius: 8px; font-weight: 600; text-decoration: none;
-    transition: background-color 0.3s ease; margin: 0.25rem;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.3s ease; 
+    margin: 0.25rem;
 }
-.whatsapp-btn { background-color: #25D366; color: white; }
-.whatsapp-btn:hover { background-color: #1EBE57; }
-.messenger-btn { background-color: #0084FF; color: white; }
-.messenger-btn:hover { background-color: #0073E0; }
+.cta-button:hover {
+    transform: scale(1.05);
+}
+.whatsapp-btn { background-color: #25D366; color: white; box-shadow: 0 4px 14px 0 rgba(0, 118, 255, 0.39); }
+.whatsapp-btn:hover { background-color: #1EBE57; box-shadow: 0 6px 20px 0 rgba(0, 118, 255, 0.23); }
+
+.messenger-btn { background-color: #0084FF; color: white; box-shadow: 0 4px 14px 0 rgba(0, 118, 255, 0.39); }
+.messenger-btn:hover { background-color: #0073E0; box-shadow: 0 6px 20px 0 rgba(0, 118, 255, 0.23); }
+
 .facebook-btn { background-color: #1877F2; color: white; }
 .facebook-btn:hover { background-color: #166FE5; }
 
-/* Chatbot Styles */
+/* ==========================================================================
+   Footer & Footer Buttons
+========================================================================== */
+footer {
+    background-color: #1a202c;
+}
+footer .cta-button {
+    background-color: transparent;
+    border: 2px solid;
+    padding: calc(0.75rem - 2px) calc(1.5rem - 2px);
+}
+footer .whatsapp-btn { border-color: #25D366; color: #25D366; box-shadow: none; }
+footer .whatsapp-btn:hover { background-color: #25D366; color: white; }
+
+footer .messenger-btn { border-color: #0084FF; color: #0084FF; box-shadow: none; }
+footer .messenger-btn:hover { background-color: #0084FF; color: white; }
+
+footer .facebook-btn { border-color: #1877F2; color: #1877F2; }
+footer .facebook-btn:hover { background-color: #1877F2; color: white; }
+
+/* ==========================================================================
+   Scroll Reveal Animation
+========================================================================== */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.reveal .service-card {
+    opacity: 0; /* Initially hide cards within a reveal section */
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible .service-card {
+     opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ==========================================================================
+   Back to Top Button & Chatbot
+========================================================================== */
+#back-to-top {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #0052D4;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    cursor: pointer;
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: transform 0.3s, opacity 0.3s, visibility 0.3s;
+}
+#back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Hover effect for back-to-top button */
+#back-to-top:hover {
+    transform: translateY(-2px) scale(1.05);
+}
+
 #chat-toggle-btn {
     position: fixed; bottom: 20px; right: 20px;
     background-color: #0052D4; color: white;
@@ -60,7 +257,35 @@ body { font-family: 'Inter', sans-serif; }
     margin-left: 0.5rem; cursor: pointer; display: flex;
     align-items: center; justify-content: center; font-size: 18px;
 }
-.typing-indicator { color: #6b7280; font-style: italic; font-size: 0.875rem; }
+.typing-indicator {
+    /* Container for animated typing dots */
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Individual dots for typing indicator animation */
+.typing-indicator .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #6b7280;
+    animation: typing-dot 1s infinite ease-in-out;
+}
+.typing-indicator .dot:nth-child(1) { animation-delay: 0s; }
+.typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing-dot {
+    0%, 80%, 100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    40% {
+        transform: translateY(-4px);
+        opacity: 0.5;
+    }
+}
 .chat-button {
     background-color: #e5e7eb; border: 1px solid #d1d5db;
     padding: 0.5rem 1rem; border-radius: 20px;
@@ -69,123 +294,27 @@ body { font-family: 'Inter', sans-serif; }
 .chat-button:hover { background-color: #d1d5db; }
 
 /* ==========================================================================
-   Liquid Glass Effect
-   This section adds an animated, colorful background behind the entire page
-   and applies a frosted glass feel to cards and key sections.
-
-   The .liquid-bg element contains multiple circular spans that float slowly
-   across the screen. Each circle uses a large blur and semi‑transparent colors
-   to create a smooth, liquid effect. The header, service cards, and footer
-   get transparent backgrounds and backdrop filters so the moving colors show
-   through with a glassy distortion.
+   Typing Animation & Cursor
 ========================================================================== */
-
-/* Container covering the full viewport for the animated blobs. */
-.liquid-bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1;
-    pointer-events: none;
+#typing-effect {
+    /* The color will be inherited from the parent h2 tag */
+    border-right: .15em solid transparent; /* Prevents text jump */
 }
 
-/* Each span inside .liquid-bg becomes a blurred, colored blob.
-   Adjust the width/height to change their size. */
-.liquid-bg span {
-    position: absolute;
-    display: block;
-    /* Increase blob size and blur and reduce opacity for a barely‑there effect */
-    width: 50vmax;
-    height: 50vmax;
-    border-radius: 50%;
-    filter: blur(250px);
-    opacity: 0.2;
-    /* Slow the animation further so motion is extremely subtle */
-    animation: liquidMove 120s ease-in-out infinite alternate;
+.cursor {
+    display: inline-block;
+    width: 4px; /* কার্সারের প্রস্থ */
+    background-color: white; /* টেক্সটের রঙের সাথে মিল রাখা হয়েছে */
+    margin-left: 0.1rem;
+    animation: blink 1s infinite;
 }
 
-/* Individual blob colors, positions and animation speeds.
-   You can add or remove spans in the HTML to vary the effect. */
-.liquid-bg span:nth-child(1) {
-    background: rgba(255, 255, 255, 0.25);
-    top: -10%;
-    left: -20%;
-    animation-duration: 140s;
-}
-
-.liquid-bg span:nth-child(2) {
-    background: rgba(240, 248, 255, 0.25);
-    top: 20%;
-    left: 60%;
-    animation-duration: 130s;
-}
-
-.liquid-bg span:nth-child(3) {
-    background: rgba(245, 240, 255, 0.25);
-    top: 55%;
-    left: -20%;
-    animation-duration: 150s;
-}
-
-.liquid-bg span:nth-child(4) {
-    background: rgba(240, 255, 240, 0.25);
-    top: 65%;
-    left: 55%;
-    animation-duration: 135s;
-}
-
-/* Keyframes that smoothly move each blob around in an organic pattern. */
-@keyframes liquidMove {
-    0% {
-        transform: translate(0, 0) scale(1);
+@keyframes blink {
+    0%, 100% {
+        background-color: white;
     }
     50% {
-        /* Reduce translation distance and scaling even further for eye‑friendly motion */
-        transform: translate(5%, -2%) scale(1.05);
-    }
-    100% {
-        transform: translate(0, 0) scale(1);
+        background-color: transparent;
     }
 }
 
-/* Apply a glassy, semi‑transparent look to the header so the blobs subtly
-   show through behind it. Target the specific bg‑white utility class to
-   override Tailwind’s white background */
-header {
-    /* Semi‑transparent header letting the blobs shimmer through while retaining readability */
-    background: rgba(255, 255, 255, 0.5) !important;
-    backdrop-filter: blur(15px) saturate(180%);
-    -webkit-backdrop-filter: blur(15px) saturate(180%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-/* Convert service cards into frosted glass panels. */
-.service-card {
-    background: rgba(255, 255, 255, 0.35) !important;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(10px) saturate(150%);
-    -webkit-backdrop-filter: blur(10px) saturate(150%);
-}
-
-/* Slightly darken the footer background and add a blur so blobs shine through. */
-footer {
-    background: rgba(255, 255, 255, 0.2) !important;
-    backdrop-filter: blur(10px) saturate(120%);
-    -webkit-backdrop-filter: blur(10px) saturate(120%);
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    /* Use a dark font color for contrast against the light frosted backdrop */
-    color: #1f2937;
-}
-
-/* Ensure footer links remain legible against the lighter background */
-footer a {
-    color: #1f2937;
-}
-
-/* Override Tailwind text utility classes inside the footer so the text remains dark */
-footer h3, footer p {
-    color: #1f2937 !important;
-}
