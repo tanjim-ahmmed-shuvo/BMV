@@ -36,6 +36,8 @@
     <link rel="stylesheet" href="styles/main.css">
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <link rel="preload" as="image" href="https://drive.google.com/uc?export=view&id=1-lwr73i4fC3wkVn3Vy7AhQyt7J8MGOum" />
+
     <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -111,7 +113,7 @@
   ]
 }
 </script>
-  </head>
+</head>
 <body class="bg-gray-50">
     <header class="bg-white shadow-md sticky top-0 z-50">
         <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
@@ -155,7 +157,12 @@
                 </div>
             </div>
             <div>
-                <img id="hero-image" src="img/Photos/banner.jpg" alt="Meta Verified Service" class="w-full h-auto max-w-md mx-auto rounded-lg shadow-2xl">
+                <img id="hero-image" 
+                     src="https://lh3.googleusercontent.com/d/1-lwr73i4fC3wkVn3Vy7AhQyt7J8MGOum=w600?authuser=0" 
+                     alt="Announcement image" 
+                     width="900" height="900"
+                     class="w-full h-auto max-w-md mx-auto rounded-lg shadow-2xl"
+                     loading="eager" decoding="async" fetchpriority="high">
             </div>
         </div>
     </section>
@@ -262,7 +269,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
   <script src="scripts/app.js"></script>
 
-  <!-- Inline typing effect script -->
   <script>
     // Typing effect for the hero headline.  It cycles through a list of words,
     // types them out character by character, deletes them, and then moves on to
