@@ -1,12 +1,16 @@
 // --- TRANSLATION DATA ---
 const translations = {
     en: {
+        // Words used in the hero typing effect
+        typingWord1: "Meta Verified",
+        typingWord2: "Subscriptions",
+        typingWord3: "Online Services",
+        subCapcut: "CapCut Premium",
         pageTitle: "Digifix BD - Meta Verified, Subscriptions & Digital Services in Bangladesh",
         metaDescription: "Get Facebook Meta Verified, Netflix, YouTube Premium, VPNs, Android Rooting, and more in Bangladesh. Digifix BD offers all digital solutions at a low price. Contact Tanjim Ahmmed Shuvo.",
         navServices: "Services",
         navContact: "Contact",
         navVisitPage: "Visit Page",
-        heroTitle: "Get Meta Verified",
         heroSubtitle: "Low Price, Fast Delivery. Build Your Trust & Boost Your Brand!",
         heroBtnWhatsapp: "Contact on WhatsApp",
         heroBtnMessenger: "Send a Message",
@@ -76,12 +80,16 @@ const translations = {
         geminiError: "Something went wrong. Please try again later.",
     },
     bn: {
+        // Words used in the hero typing effect (Bangla translations)
+        typingWord1: "মেটা ভেরিফায়েড",
+        typingWord2: "সাবস্ক্রিপশন",
+        typingWord3: "অনলাইন সার্ভিসসমূহ",
+        subCapcut: "ক্যাপকাট প্রিমিয়াম",
         pageTitle: "Digifix BD - মেটা ভেরিফাইড, সাবস্ক্রিপশন ও ডিজিটাল সার্ভিস",
         metaDescription: "বাংলাদেশে ফেসবুক মেটা ভেরিফাইড, নেটফ্লিক্স, ইউটিউব প্রিমিয়াম, ভিপিএন, অ্যান্ড্রয়েড রুটিং এবং আরও অনেক ডিজিটাল সমাধান নিন। ডিজিফিক্স বিডি সুলভ মূল্যে সকল পরিষেবা অফার করে। তানজিম আহমেদ শুভ-এর সাথে যোগাযোগ করুন।",
         navServices: "সার্ভিসসমূহ",
         navContact: "যোগাযোগ",
         navVisitPage: "পেজ ভিজিট করুন",
-        heroTitle: "মেটা ভেরিফাইড করুন",
         heroSubtitle: "সুলভ মূল্য, দ্রুত ডেলিভারি। আপনার বিশ্বাস তৈরি করুন এবং ব্র্যান্ডকে এগিয়ে নিন!",
         heroBtnWhatsapp: "WhatsApp-এ যোগাযোগ",
         heroBtnMessenger: "মেসেজ পাঠান",
@@ -151,6 +159,14 @@ const translations = {
         geminiError: "কোনো একটি সমস্যা হয়েছে। দয়া করে, কিছুক্ষণ পর আবার চেষ্টা করুন।",
     }
 };
+
+// Make translations globally accessible so that inline scripts in index.html
+// can access translation values. Without this, modules scoped to this file
+// do not automatically attach variables to the window object.
+if (typeof window !== 'undefined') {
+    window.translations = translations;
+}
+
 // --- LANGUAGE SWITCHER LOGIC ---
 const languageSwitcher = document.getElementById('language-switcher');
 const translatableElements = document.querySelectorAll('[data-translate-key]');
@@ -178,14 +194,175 @@ const setLanguage = (lang) => {
 languageSwitcher.addEventListener('change', (event) => {
     setLanguage(event.target.value);
 });
+
+// --- MAIN INITIALIZATION ON DOM CONTENT LOADED ---
 document.addEventListener('DOMContentLoaded', () => {
+    // Set language
     const savedLang = localStorage.getItem('language');
     const browserLang = navigator.language.split('-')[0];
     const defaultLang = (browserLang === 'bn' && !savedLang) ? 'bn' : 'en';
     const langToSet = savedLang || defaultLang;
     setLanguage(langToSet);
+
+    // Initialize features
     initializeChatbot();
+    initializeScrollEffects();
+    // initializeTypingAnimation();
+    // The typing effect is now handled by an inline script in index.html to ensure
+    // it runs independently from the rest of this script. See index.html for details.
+    initializeIntersectionObserver();
 });
+
+// === টাইপিং অ্যানিমেশনের জন্য নতুন ফাংশন ===
+function initializeTypingAnimation() {
+    const typingElement = document.getElementById('typing-effect');
+    if (!typingElement) return;
+    // Words to cycle through in the typing effect
+    const words = ["Meta Verified", "Subscriptions", "Online Services"];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+
+    /**
+     * Core loop for typing and deleting characters.
+     * This implementation deliberately pauses at the end of each word
+     * and before starting a new word to create a more natural rhythm.
+     */
+    function typeLoop() {
+        const current = words[wordIndex];
+        // Update the displayed text depending on whether we are typing or deleting
+        typingElement.textContent = current.substring(0, charIndex);
+        if (!isDeleting) {
+            // Continue typing until the word is complete
+            if (charIndex < current.length) {
+                charIndex++;
+            } else {
+                // Pause at the end of the word before deleting
+                isDeleting = true;
+            }
+        } else {
+            // Continue deleting until all characters are removed
+            if (charIndex > 0) {
+                charIndex--;
+            } else {
+                // Move to the next word and start typing again
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+            }
+        }
+        // Determine delay based on typing/deleting and pause points
+        let delay;
+        if (!isDeleting && charIndex === current.length) {
+            // Pause for 1.5s when a word has been fully typed
+            delay = 1500;
+        } else if (isDeleting && charIndex === 0) {
+            // Pause briefly before starting the next word
+            delay = 500;
+        } else {
+            // Faster deleting and slower typing speeds
+            delay = isDeleting ? 50 : 200;
+        }
+        setTimeout(typeLoop, delay);
+    }
+    // Start the typing loop
+    typeLoop();
+}
+
+
+// --- STICKY NAV & BACK-TO-TOP BUTTON ---
+function initializeScrollEffects() {
+    const header = document.querySelector('header');
+    const backToTopButton = document.getElementById('back-to-top');
+
+    window.addEventListener('scroll', () => {
+        // Sticky nav
+        if (window.scrollY > 80) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+
+        // Back to top button
+        if (backToTopButton) { // Check if the button exists
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('show');
+                backToTopButton.classList.remove('hidden');
+            } else {
+                backToTopButton.classList.remove('show');
+                backToTopButton.classList.add('hidden');
+            }
+        }
+    });
+
+    // Scroll-to-top click handler
+    if (backToTopButton) {
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    // Activate nav links based on scroll position
+    const navLinks = document.querySelectorAll('header nav a[href^="#"]');
+    const sections = [];
+    navLinks.forEach(link => {
+        const targetId = link.getAttribute('href');
+        if (targetId && targetId.startsWith('#')) {
+            const section = document.querySelector(targetId);
+            if (section) sections.push({ id: targetId, element: section, link });
+        }
+    });
+    function updateActiveNav() {
+        let currentId = '';
+        // Determine the currently visible section
+        sections.forEach(({ id, element }) => {
+            const rect = element.getBoundingClientRect();
+            if (rect.top <= 150 && rect.bottom >= 150) {
+                currentId = id;
+            }
+        });
+        // Remove active class from all
+        navLinks.forEach(l => l.classList.remove('active'));
+        if (currentId) {
+            const activeLink = document.querySelector(`header nav a[href='${currentId}']`);
+            if (activeLink) activeLink.classList.add('active');
+        }
+    }
+    window.addEventListener('scroll', updateActiveNav);
+    updateActiveNav();
+}
+
+
+// --- SCROLL REVEAL WITH INTERSECTION OBSERVER ---
+function initializeIntersectionObserver() {
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                
+                const cards = entry.target.querySelectorAll('.service-card');
+                cards.forEach((card, index) => {
+                    card.style.transitionDelay = `${index * 60}ms`;
+                });
+
+                observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    revealElements.forEach(el => {
+        observer.observe(el);
+    });
+}
+
+
 // --- CHATBOT & GEMINI API LOGIC ---
 const chatToggleBtn = document.getElementById('chat-toggle-btn');
 const chatWindow = document.getElementById('chat-window');
@@ -195,9 +372,15 @@ const chatSendBtn = document.getElementById('chat-send-btn');
 function initializeChatbot() {
     chatToggleBtn.addEventListener('click', () => {
         chatWindow.classList.toggle('active');
+        // When opening the chat for the first time, delay the initial message for a more human feel
         if (chatWindow.classList.contains('active') && chatMessages.children.length === 0) {
             const currentLang = localStorage.getItem('language') || 'en';
-            addMessage(translations[currentLang].chatInitialQuestion, 'bot');
+            // Show typing indicator immediately
+            showTypingIndicator();
+            setTimeout(() => {
+                removeTypingIndicator();
+                addMessage(translations[currentLang].chatInitialQuestion, 'bot');
+            }, 1200);
         }
     });
 }
@@ -220,7 +403,8 @@ function showTypingIndicator() {
     const typingDiv = document.createElement('div');
     typingDiv.className = 'chat-message bot';
     typingDiv.id = 'typing-indicator';
-    typingDiv.innerHTML = `<div class="message-bubble typing-indicator">...</div>`;
+    // Use animated dots instead of static ellipsis for a more natural typing effect
+    typingDiv.innerHTML = `<div class="message-bubble typing-indicator"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>`;
     chatMessages.appendChild(typingDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
@@ -245,7 +429,7 @@ function handleAgentChoice(choice) {
             <a href="https://wa.me/16506687797" target="_blank" class="cta-button whatsapp-btn text-sm" style="text-decoration: none;">
                 <i class="fab fa-whatsapp mr-2"></i> ${whatsappBtnText}
             </a>
-            <a href="https://m.me/tanjim.ahmmed.shuvo" target="_blank" class="cta-button messenger-btn text-sm" style="text-decoration: none;">
+            <a href="https://m.me/digifix.agency?ref=digifixbd_web_click" tar="_blank" class="cta-button messenger-btn text-sm" style="text-decoration: none;">
                 <i class="fab fa-facebook-messenger mr-2"></i> ${messengerBtnText}
             </a>
         `;
@@ -310,6 +494,7 @@ async function handleSendMessage() {
         addMessage(text.replace(/\n/g, '<br>'), 'bot', true);
         
         setTimeout(() => {
+            // Use correct translation key for live agent prompt
             const liveAgentQuery = translations[currentLang].chatLiveAgentQuery;
             const yesText = translations[currentLang].chatYes;
             const noText = translations[currentLang].chatNo;
