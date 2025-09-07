@@ -12,6 +12,20 @@ body {
 .hero-gradient {
     position: relative;
     background-color: #667eea; /* Fallback color */
+
+    /* Add rounded bottom corners to create a curved section that blends
+       smoothly into the next section. Using percentages makes the curve
+       responsive to different viewport widths/heights. */
+    border-bottom-left-radius: 50% 14%;
+    border-bottom-right-radius: 50% 14%;
+
+    /* Hide any overflowing gradient or pseudo elements so the curve
+       remains clean. */
+    overflow: hidden;
+
+    /* Apply a subtle upward shadow to give the top of the hero section
+       a 3D depth effect as if it is lifting off the page. */
+    box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.25);
 }
 .hero-gradient::before {
     content: '';
@@ -21,6 +35,30 @@ body {
     background-size: 400% 400%;
     animation: animated-gradient 18s ease infinite;
     z-index: 1;
+
+    /* Inherit the same curved bottom corners from the parent so the
+       animated gradient follows the curved shape. */
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
+
+/* A pseudo-element placed above the hero gradient that adds a soft
+   highlight / glow. This improves the 3D illusion by simulating
+   reflected light along the top edge of the section. */
+.hero-gradient::after {
+    content: '';
+    position: absolute;
+    /* Place the glow directly at the top edge and allow it to fade
+       downward over a larger height. The gradient from semi-transparent
+       white to fully transparent gives a soft sheen reminiscent of
+       reflected light on a curved surface. */
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+    filter: none;
+    pointer-events: none;
 }
 #hero-section .container {
     position: relative;
@@ -54,9 +92,14 @@ body {
    Header and Navigation
 ========================================================================== */
 header {
-    background: rgba(255, 255, 255, 0.5) !important;
-    backdrop-filter: blur(2px) saturate(120%);
-    -webkit-backdrop-filter: blur(2px) saturate(120%);
+    /* Use the same styling as the scrolled state by default so
+       the header appearance doesn’t change on scroll. This keeps
+       the hero-section’s curved top effect consistent regardless
+       of scroll position. */
+    background: rgba(255, 255, 255, 0.85) !important;
+    backdrop-filter: blur(10px) saturate(180%);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 header.scrolled {
@@ -66,11 +109,17 @@ header.scrolled {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 header nav {
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
+    /* Use the smaller padding defined for the scrolled state so that the
+       header height remains consistent. This ensures that the top of
+       the hero section is always fully visible on page load, rather than
+       being revealed only after scrolling. */
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     transition: padding 0.3s ease-out;
 }
 header.scrolled nav {
+    /* Maintain the same padding values when scrolled so the header height
+       doesn’t change on scroll. */
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 }
@@ -318,3 +367,14 @@ footer .facebook-btn:hover { background-color: #1877F2; color: white; }
     }
 }
 
+
+/* Curved bottom edge for hero */
+.hero-gradient {
+    border-bottom-left-radius: 50% 14%;
+    border-bottom-right-radius: 50% 14%;
+    overflow: hidden; /* ensure the gradient respects the curve */
+}
+.hero-gradient::before {
+    border-bottom-left-radius: inherit;
+    border-bottom-right-radius: inherit;
+}
