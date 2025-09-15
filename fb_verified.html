@@ -3,8 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Order Confirmation | Facebook Profile Verify</title>
+  <title>Order Confirmation | ফেসবুক প্রোফাইল ভেরিফাই</title>
   <meta name="description" content="ফেসবুক প্রোফাইল ভেরিফাই – ধাপে ধাপে ফর্ম, স্টিকি টোটাল, ইনলাইন ভ্যালিডেশন, অটো-প্রাইস ক্যালকুলেশন।" />
+
+  <!-- Open Graph tags for link preview -->
+  <meta property="og:title" content="Order Confirmation | ফেসবুক প্রোফাইল ভেরিফাই" />
+  <meta property="og:description" content="ফেসবুক প্রোফাইল ভেরিফাই – আপনার অর্ডার সহজে সম্পন্ন করুন।" />
+  <meta property="og:image" content="https://lh3.googleusercontent.com/d/1-lwr73i4fC3wkVn3Vy7AhQyt7J8MGOum=w600?authuser=0" />
+  <meta property="og:url" content="https://তোমার-সার্ভারে-হোস্ট-করা-পেজের-লিঙ্ক.com/fb_verified.final.html" />
+  <meta property="og:type" content="website" />
+
+  <!-- Optional: Twitter Card support -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Order Confirmation | ফেসবুক প্রোফাইল ভেরিফাই" />
+  <meta name="twitter:description" content="ফেসবুক প্রোফাইল ভেরিফাই – আপনার অর্ডার সহজে সম্পন্ন করুন।" />
+  <meta name="twitter:image" content="https://lh3.googleusercontent.com/d/1-lwr73i4fC3wkVn3Vy7AhQyt7J8MGOum=w600?authuser=0" />
+
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
   body{font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, Ubuntu, Cantarell, Helvetica Neue, Arial; padding-bottom: 88px}
@@ -889,13 +903,13 @@
 ----------------------------------
 **গ্রাহকের তথ্য**
 **নাম**: ${dataObj.name}
-**মোবাইল**: ${dataObj.phone}
-**ইমেইল**: ${dataObj.email || 'দেওয়া হয়নি'}
-**অতিরিক্ত তথ্য**: ${dataObj.requirements || 'নেই'}
+**মোবাইল**: \`${dataObj.phone}\`
+**ইমেইল**: \`${dataObj.email || 'দেওয়া হয়নি'}\`
+**অতিরিক্ত তথ্য**: \`${dataObj.requirements || 'নেই'}\`
 ----------------------------------
 **fbp**: ${fbp || 'n/a'}
 **fbc**: ${fbc || 'n/a'}
-**Order ID**: ${orderEventId}
+**Order ID**: \`${orderEventId}\`
 `;
 
         await fetch(SERVER_SCRIPT_URL, {
