@@ -579,7 +579,7 @@
     const PIXEL_ID = '1091993236371736';
     const CURRENCY = 'BDT';
     // Only set to true if a submit truly represents a paid order or confirmed purchase.
-    const SEND_PURCHASE_ON_SUBMIT = false;
+    const SEND_PURCHASE_ON_SUBMIT = true;
 
     // Updated URL to use the proxy worker
     const SERVER_SCRIPT_URL = 'https://telegram-proxy.tanjimbiswas99.workers.dev/send-order';
@@ -820,6 +820,18 @@
     const whatsappNumber = '16506687797'; // digits only, E.164 without + or spaces
     const thankMessenger = document.getElementById('thankMessenger');
     const thankWhatsApp = document.getElementById('thankWhatsApp');
+    // Track Contact clicks for attribution
+    if (thankMessenger) {
+      thankMessenger.addEventListener('click', () => {
+        try { fbq('track', 'Contact', { channel: 'Messenger' }); } catch(e) {}
+      });
+    }
+    if (thankWhatsApp) {
+      thankWhatsApp.addEventListener('click', () => {
+        try { fbq('track', 'Contact', { channel: 'WhatsApp' }); } catch(e) {}
+      });
+    }
+
 
     function messengerHref(){
       const fd = new FormData(form);
@@ -1068,6 +1080,5 @@
       sendViewContentOnce();
     });
   </script>
-</body>
 </body>
 </html>
