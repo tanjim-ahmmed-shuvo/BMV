@@ -554,8 +554,18 @@
     </p>
   </footer>
 
-  <script>
+  
+<script>
+    // Year in footer
     document.getElementById('yr').textContent = new Date().getFullYear();
+
+    /* =====================
+       Config
+       ===================== */
+    const PIXEL_ID = '1091993236371736';
+    const CURRENCY = 'BDT';
+    // Only set to true if a submit truly represents a paid order or confirmed purchase.
+    const SEND_PURCHASE_ON_SUBMIT = false;
 
     // Updated URL to use the proxy worker
     const SERVER_SCRIPT_URL = 'https://telegram-proxy.tanjimbiswas99.workers.dev/send-order';
@@ -567,8 +577,39 @@
     const progressBar = document.getElementById('progressBar');
     const totalEl = document.getElementById('total');
     const form = document.getElementById('orderForm');
-    
-    // Flag to track user interaction for abandonment tracking
+
+    // ===== Cookie helpers (for fbp/fbc) =====
+    function getCookie(name){
+      const m = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+      return m ? decodeURIComponent(m.pop()) : '';
+    }
+    function setCookie(name, value, days){
+      let expires = '';
+      if(days){
+        const d = new Date();
+        d.setTime(d.getTime() + (days*24*60*60*1000));
+        expires = '; expires=' + d.toUTCString();
+      }
+      document.cookie = name + '=' + encodeURIComponent(value) + expires + '; path=/; SameSite=Lax';
+    }
+    function ensureFbcFromFbclid(){
+      const url = new URL(window.location.href);
+      const fbclid = url.searchParams.get('fbclid');
+      if(fbclid){
+        // Format: fb.1.<ts>.<fbclid>
+        const ts = Date.now();
+        const value = `fb.1.${ts}.${fbclid}`;
+        setCookie('_fbc', value, 90);
+      }
+    }
+    function readFbIds(){
+      ensureFbcFromFbclid();
+      const fbp = getCookie('_fbp');
+      const fbc = getCookie('_fbc');
+      return { fbp, fbc };
+    }
+
+    // Flags to track funnel journey
     let hasInteracted = false;
     let isSubmitted = false;
 
@@ -580,22 +621,22 @@
     // Fire abandoned checkout event if user leaves the page after interacting
     window.addEventListener('beforeunload', () => {
       if (hasInteracted && !isSubmitted) {
-        // Get the current form data at the time of abandonment
         const fd = new FormData(form);
         const { total, duration, hasOffer, share } = calc();
         const eventId = 'abandoned-' + (crypto.randomUUID ? crypto.randomUUID() : Date.now());
+        const { fbp, fbc } = readFbIds();
 
         fbq('trackCustom', 'AbandonedCheckout', {
           content_name: 'Profile Verify Order',
-          product:'profile', 
-          duration, 
-          has_offer_38: hasOffer, 
-          share_password: share, 
+          product: 'profile',
+          duration,
+          has_offer_38: hasOffer,
+          share_password: share,
           price: total,
-          // You can also send the fields the user filled out
           name: fd.get('name') || '',
           email: fd.get('email') || '',
-          phone: fd.get('phone') || ''
+          phone: fd.get('phone') || '',
+          fbp, fbc
         }, {eventID: eventId});
       }
     });
@@ -623,60 +664,54 @@
 
     // Function to update the summary box in Step 2
     function updateSummary(){
-        const fd = new FormData(form);
-        const duration = fd.get('duration');
-        const hasOffer = fd.get('hasOffer38') === 'on';
-        const share = fd.get('sharePass');
-        const { total } = calc();
+      const fd = new FormData(form);
+      const duration = fd.get('duration');
+      const hasOffer = fd.get('hasOffer38') === 'on';
+      const share = fd.get('sharePass');
+      const { total } = calc();
 
-        let durationLabel = '';
-        let offerLabel = '';
-        let shareLabel = '';
+      let durationLabel = '';
+      let offerLabel = '';
+      let shareLabel = '';
 
-        // Determine the duration cost
-        let durationCost;
-        if (duration === '1m') {
-            durationCost = hasOffer ? 300 : 700;
-            durationLabel = `মেয়াদ: ১ মাস`;
-        } else if (duration === '2m') {
-            durationCost = hasOffer ? 500 : 1300;
-            durationLabel = `মেয়াদ: ২ মাস`;
-        }
+      let durationCost;
+      if (duration === '1m') {
+          durationCost = hasOffer ? 300 : 700;
+          durationLabel = `মেয়াদ: ১ মাস`;
+      } else if (duration === '2m') {
+          durationCost = hasOffer ? 500 : 1300;
+          durationLabel = `মেয়াদ: ২ মাস`;
+      }
 
-        // Determine the offer label and cost
-        let offerCost = 0;
-        if (hasOffer) {
-            offerCost = (duration === '1m' ? (700 - 300) : (1300 - 500));
-            offerLabel = `বিশেষ অফার: আছে`;
-        } else {
-            offerLabel = `বিশেষ অফার: নেই`;
-        }
+      let offerCost = 0;
+      if (hasOffer) {
+          offerCost = (duration === '1m' ? (700 - 300) : (1300 - 500));
+          offerLabel = `বিশেষ অফার: আছে`;
+      } else {
+          offerLabel = `বিশেষ অফার: নেই`;
+      }
 
-        // Determine the share cost and label
-        let shareCost = 0;
-        if (share === 'no') {
-            shareCost = 100;
-            shareLabel = `পাসওয়ার্ড শেয়ার: না`;
-        } else {
-            shareLabel = `পাসওয়ার্ড শেয়ার: হ্যাঁ`;
-        }
-        
-        document.getElementById('summary-duration').textContent = `${durationLabel} (৳${durationCost})`;
-        document.getElementById('summary-offer').textContent = `${offerLabel} ${hasOffer ? `(-৳${offerCost})` : ''}`;
-        document.getElementById('summary-share').textContent = `${shareLabel} ${share === 'no' ? `(+৳${shareCost})` : ''}`;
-        document.getElementById('summary-total').textContent = total.toString();
+      let shareCost = 0;
+      if (share === 'no') {
+          shareCost = 100;
+          shareLabel = `পাসওয়ার্ড শেয়ার: না`;
+      } else {
+          shareLabel = `পাসওয়ার্ড শেয়ার: হ্যাঁ`;
+      }
+
+      document.getElementById('summary-duration').textContent = `${durationLabel} (৳${durationCost})`;
+      document.getElementById('summary-offer').textContent = `${offerLabel} ${hasOffer ? `(-৳${offerCost})` : ''}`;
+      document.getElementById('summary-share').textContent = `${shareLabel} ${share === 'no' ? `(+৳${shareCost})` : ''}`;
+      document.getElementById('summary-total').textContent = total.toString();
     }
-
 
     // Validation for Step 2
     function validateStep2() {
       const fd = new FormData(form);
-      // 'email' is now optional
-      const fields = ['name', 'phone']; 
+      const fields = ['name', 'phone'];
       let isValid = true;
       let firstInvalidElement = null;
 
-      // Validate required text inputs
       fields.forEach(field => {
         const input = document.querySelector(`[name="${field}"]`);
         const errEl = document.querySelector(`[data-err="${field}"]`);
@@ -694,8 +729,7 @@
           errEl.classList.add('hidden');
         }
       });
-      
-      // Separate validation for email if it's filled in but invalid
+
       const emailInput = document.querySelector('[name="email"]');
       const emailErrEl = document.querySelector('[data-err="email"]');
       if (emailInput.value && !emailInput.checkValidity()) {
@@ -724,29 +758,35 @@
       }
     }
 
-    function go2(){ 
-      step1.classList.add('hidden'); 
-      step2.classList.remove('hidden'); 
-      progressBar.style.width='100%'; 
-      scrollTo(0,0); 
+    function go2(){
+      step1.classList.add('hidden');
+      step2.classList.remove('hidden');
+      progressBar.style.width='100%';
+      scrollTo(0,0);
 
-      const fd = new FormData(form);
       const { total, duration, hasOffer, share } = calc();
       const eventId = 'next-step-' + (crypto.randomUUID ? crypto.randomUUID() : Date.now());
 
-      // Fire the custom event
+      // Custom event (kept)
       fbq('trackCustom', 'PackageSelected', {
-        product:'profile', 
-        duration, 
-        has_offer_38:hasOffer, 
-        share_password:share, 
+        product:'profile',
+        duration,
+        has_offer_38:hasOffer,
+        share_password:share,
         price: total
       }, {eventID: eventId});
-      
-      // Update the summary box when transitioning to step 2
+
+      // Standard event to help optimization
+      fbq('track', 'InitiateCheckout', {
+        contents: [{ id: 'profile', quantity: 1 }],
+        content_type: 'service',
+        value: total,
+        currency: CURRENCY
+      }, {eventID: 'ic-' + eventId});
+
       updateSummary();
     }
-    
+
     function back1(){ step2.classList.add('hidden'); step1.classList.remove('hidden'); progressBar.style.width='50%'; scrollTo(0,0); }
 
     toStep2.addEventListener('click', ()=>{
@@ -785,7 +825,7 @@
         `Offer38: ${r.hasOffer?'yes':'no'}`,
         `SharePass: ${r.share||''}`,
         `Total: ৳${r.total}`
-      ].join('\n');
+      ].join('\\n');
       return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(txt)}`;
     }
 
@@ -817,26 +857,25 @@
     const submitBtn = document.getElementById('submitBtn');
     form.addEventListener('submit', async (e)=>{
       e.preventDefault();
-      
+
       const isStep2Valid = validateStep2();
       if (!isStep2Valid) {
         notify('দয়া করে সকল তথ্য সঠিকভাবে পূরণ করুন');
         return;
       }
-      
-      // Set the isSubmitted flag to true so the beforeunload event doesn't fire
+
       isSubmitted = true;
-      
+
       // Start the button animation
       if(!submitBtn.classList.contains('animate')) {
           submitBtn.classList.add('animate');
       }
-
       submitBtn.disabled = true;
-      
+
       const dataObj = Object.fromEntries(new FormData(form).entries());
       const { total, duration, hasOffer, share } = calc();
-      const eventId = 'lead-' + (crypto.randomUUID ? crypto.randomUUID() : Date.now());
+      const orderEventId = 'order-' + (crypto.randomUUID ? crypto.randomUUID() : (Date.now() + '_' + Math.random().toString(36).slice(2,8)));
+      const { fbp, fbc } = readFbIds();
 
       try {
         // Prepare the message in Markdown format for the Telegram proxy
@@ -854,28 +893,62 @@
 **ইমেইল**: ${dataObj.email || 'দেওয়া হয়নি'}
 **অতিরিক্ত তথ্য**: ${dataObj.requirements || 'নেই'}
 ----------------------------------
-**Order ID**: ${eventId}
+**fbp**: ${fbp || 'n/a'}
+**fbc**: ${fbc || 'n/a'}
+**Order ID**: ${orderEventId}
 `;
 
         await fetch(SERVER_SCRIPT_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            message: message,
-          })
+          body: JSON.stringify({ message })
         });
 
         // Simulate the button animation
         await new Promise(resolve => setTimeout(resolve, 8000));
 
-        // Pixel events
+        // === Meta Pixel Events ===
+        // Lead (primary optimization signal)
         fbq('track', 'Lead', {
           content_name: 'Profile Verify Order',
           content_type: 'service',
-          contents: [{ id: `profile-${duration}${hasOffer?'-offer':''}${share==='no'?'-noshares':''}`, quantity: 1, item_price: total }],
-          value: total, currency: 'BDT', product: 'profile', duration, has_offer_38: hasOffer, share_password: share,
-          external_id: dataObj.phone || dataObj.email || ''
-        }, {eventID: eventId});
+          contents: [{ id: 'profile', quantity: 1, item_price: total }],
+          value: total,
+          currency: CURRENCY,
+          product: 'profile',
+          duration,
+          has_offer_38: hasOffer,
+          share_password: share,
+          external_id: dataObj.phone || dataObj.email || '',
+          fbp, fbc
+        }, {eventID: orderEventId});
+
+        // Optionally send Purchase if this submit truly equals a paid purchase
+        if (SEND_PURCHASE_ON_SUBMIT) {
+          fbq('track', 'Purchase', {
+            contents: [{ id: 'profile', quantity: 1 }],
+            content_type: 'service',
+            value: total,
+            currency: CURRENCY,
+            product: 'profile',
+            duration,
+            has_offer_38: hasOffer,
+            share_password: share,
+            fbp, fbc
+          }, {eventID: orderEventId});
+        }
+
+        // CompleteRegistration as a completion signal (kept)
+        fbq('track','CompleteRegistration',{
+          status:'submitted',
+          product:'profile',
+          duration,
+          has_offer_38:hasOffer,
+          share_password:share,
+          value:total,
+          currency:CURRENCY,
+          fbp, fbc
+        }, {eventID:orderEventId});
 
         // Google Analytics event tracking
         gtag('event', 'lead_generation', {
@@ -883,12 +956,11 @@
           'event_label': 'Profile Verify Order',
           'value': total
         });
-        
+
         document.getElementById('thankyouModal').classList.remove('hidden');
         document.querySelector('main form').classList.add('hidden');
         if(thankMessenger) thankMessenger.href = messengerHref();
         if(thankWhatsApp) thankWhatsApp.href = whatsappHref();
-        fbq('track','CompleteRegistration',{ status:'submitted', product:'profile', duration, has_offer_38:hasOffer, share_password:share, value:total, currency:'BDT' }, {eventID:eventId});
 
       } catch(err){
         console.error(err);
@@ -962,6 +1034,26 @@
       console.log('%cTests finished. Check assertions above.','color:#0a0');
     }
     window.addEventListener('load', runTests);
+
+    // ===== ViewContent on initial view (after prices ready) =====
+    function sendViewContentOnce(){
+      if (sendViewContentOnce._sent) return;
+      sendViewContentOnce._sent = true;
+      const { total } = calc();
+      fbq('track', 'ViewContent', {
+        contents: [{ id: 'profile', quantity: 1 }],
+        content_type: 'service',
+        value: total || 0,
+        currency: CURRENCY
+      });
+    }
+    window.addEventListener('load', ()=>{
+      // ensure fbc if fbclid present
+      ensureFbcFromFbclid();
+      // send ViewContent
+      sendViewContentOnce();
+    });
   </script>
+</body>
 </body>
 </html>
